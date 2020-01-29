@@ -1,12 +1,8 @@
-import { NextPage } from 'next';
+import { NextPage } from "next";
+import "../utils/UIDLParser";
 
 const Home: NextPage<{ userAgent: string }> = ({ userAgent }) => (
-  <h1>Hello world! - user agent: {userAgent}</h1>
+  <div>We have started !</div>
 );
-
-Home.getInitialProps = async ({ req }) => {
-  const userAgent = req ? req.headers['user-agent'] || '' : navigator.userAgent;
-  return { userAgent };
-};
 
 export default Home;
