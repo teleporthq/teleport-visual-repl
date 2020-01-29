@@ -1,14 +1,17 @@
 import { UIDLNode } from "../interfaces/UIDL";
 const myimport = require("./componentfile");
 const htmlMap = require("../utils/html-mapping.json");
-console.log(htmlMap);
 
 let depth = 0;
+
 const getComponent = (tree: UIDLNode, depth: number) => {
   const contents = tree.content;
   let list: any[] = [];
+
+  // Even if you only have one line of code after the 'if' statement
+  // you can place it into brackets
   if (!contents) return [];
-  console.log(Object.keys(contents));
+
   Object.keys(contents).forEach(key => {
     const elementType = contents[key];
     if (typeof elementType === "string") {
@@ -21,10 +24,12 @@ const getComponent = (tree: UIDLNode, depth: number) => {
         };
         list.push(myResult);
       } else {
+        // list.length ? ...
         list[list.length - 1]
           ? (list[list.length - 1][key] = elementType)
           : null;
       }
+      // exit fast. Return and skip the 'else' statement
     } else {
       if (key === "children") {
         elementType.forEach(
@@ -35,6 +40,9 @@ const getComponent = (tree: UIDLNode, depth: number) => {
         list[list.length - 1][key] = elementType;
       }
     }
+
+    // try to call list[list.length - 1][key] = elementType; here, insead
+    // of the else branches above
   });
   return list;
 };

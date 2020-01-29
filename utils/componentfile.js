@@ -1,140 +1,285 @@
 const myComponent = {
-  name: "Navbar",
+  $schema: "https://docs.teleporthq.io/uidl-schema/v1/component.json",
+  name: "Page",
   node: {
     type: "element",
     content: {
-      elementType: "nav",
-      style: {
-        "border-bottom": {
-          type: "static",
-          content: "1px solid rgba(0,0,0,0.25)"
-        }
-      },
+      elementType: "container",
+      name: "page",
       children: [
         {
           type: "element",
           content: {
-            elementType: "ul",
-            name: "list-container",
-            style: {
-              "list-style": "none",
-              margin: "0px",
-              padding: "0px",
-              display: "flex",
-              "font-size": "18px"
-            },
+            elementType: "container",
+            name: "container",
             children: [
               {
                 type: "element",
                 content: {
-                  elementType: "li",
-                  name: "home-link",
+                  elementType: "heading1",
+                  name: "heading1",
+                  children: [
+                    {
+                      type: "static",
+                      content: "Vlad Grecu"
+                    }
+                  ],
                   style: {
-                    padding: "10px 20px",
-                    transition: "all .15s ease-in-out",
-                    cursor: "pointer",
-                    "&:hover": {
+                    fontSize: {
+                      type: "static",
+                      content: "2em"
+                    },
+                    marginTop: {
+                      type: "static",
+                      content: "0.67em"
+                    },
+                    marginBottom: {
+                      type: "static",
+                      content: "0.67em"
+                    },
+                    color: {
+                      type: "static",
+                      content: "white"
+                    },
+                    textAlign: {
+                      type: "static",
+                      content: "center"
+                    },
+                    "@media(max-width: 479px)": {
                       type: "nested-style",
                       content: {
-                        color: {
+                        textAlign: {
                           type: "static",
-                          content: "red"
-                        },
-                        "border-bottom": "3px solid red",
-                        "padding-bottom": "7px"
+                          content: "center"
+                        }
                       }
                     }
                   },
-                  children: [
-                    {
-                      type: "element",
-                      content: {
-                        elementType: "navlink",
-                        attrs: {
-                          transitionTo: "home"
-                        },
-                        children: ["Home"]
-                      }
-                    }
-                  ]
+                  attrs: {}
                 }
               },
               {
                 type: "element",
                 content: {
-                  name: "team-link",
-                  elementType: "li",
+                  elementType: "container",
+                  name: "container",
+                  children: [],
                   style: {
-                    padding: "10px 20px",
-                    transition: "all .15s ease-in-out",
-                    cursor: "pointer",
-                    "&:hover": {
+                    width: {
+                      type: "static",
+                      content: "100px"
+                    },
+                    height: {
+                      type: "static",
+                      content: "100px"
+                    },
+                    backgroundColor: {
+                      type: "static",
+                      content: "#ffffff"
+                    },
+                    margin: {
+                      type: "static",
+                      content: "auto"
+                    },
+                    borderRadius: {
+                      type: "static",
+                      content: "50%"
+                    },
+                    "@media(max-width: 479px)": {
                       type: "nested-style",
                       content: {
-                        color: {
+                        backgroundColor: {
                           type: "static",
-                          content: "red"
+                          content: "#d14141"
                         },
-                        "border-bottom": "3px solid red",
-                        "padding-bottom": "7px"
+                        margin: {
+                          type: "static",
+                          content: "auto"
+                        },
+                        padding: {
+                          type: "static",
+                          content: "0"
+                        }
                       }
                     }
                   },
-                  children: [
-                    {
-                      type: "element",
-                      content: {
-                        elementType: "navlink",
-                        attrs: {
-                          transitionTo: "team"
-                        },
-                        children: ["Team"]
-                      }
-                    }
-                  ]
+                  attrs: {}
                 }
               },
               {
                 type: "element",
                 content: {
-                  elementType: "li",
-                  name: "contact-link",
-                  style: {
-                    padding: "10px 20px",
-                    transition: "all .15s ease-in-out",
-                    cursor: "pointer",
-                    "&:hover": {
-                      type: "nested-style",
-                      content: {
-                        color: {
-                          type: "static",
-                          content: "red"
-                        },
-                        "border-bottom": "3px solid red",
-                        "padding-bottom": "7px"
-                      }
-                    }
-                  },
+                  elementType: "heading6",
+                  name: "heading6",
                   children: [
                     {
-                      type: "element",
-                      content: {
-                        elementType: "navlink",
-                        attrs: {
-                          transitionTo: "contact-us"
-                        },
-                        children: ["Contact Us"]
-                      }
+                      type: "static",
+                      content: "Heading Level 6"
                     }
-                  ]
+                  ],
+                  style: {
+                    fontSize: {
+                      type: "static",
+                      content: ".75em"
+                    },
+                    marginTop: {
+                      type: "static",
+                      content: "2.33em"
+                    },
+                    marginBottom: {
+                      type: "static",
+                      content: "2.33em"
+                    },
+                    color: {
+                      type: "static",
+                      content: "#ffffff"
+                    },
+                    margin: {
+                      type: "static",
+                      content: "auto"
+                    },
+                    border: {
+                      type: "static",
+                      content: "1px solid red"
+                    },
+                    textAlign: {
+                      type: "static",
+                      content: "center"
+                    }
+                  },
+                  attrs: {}
                 }
               }
-            ]
+            ],
+            style: {
+              height: {
+                type: "static",
+                content: "300px"
+              },
+              backgroundColor: {
+                type: "static",
+                content: "black"
+              },
+              borderRadius: {
+                type: "static",
+                content: "2%"
+              },
+              border: {
+                type: "static",
+                content: "1px solid red"
+              },
+              padding: {
+                type: "static",
+                content: "30px"
+              },
+              boxSizing: {
+                type: "static",
+                content: "border-box"
+              },
+              width: {
+                type: "static",
+                content: "300px"
+              },
+              marginTop: {
+                type: "static",
+                content: "auto"
+              },
+              marginRight: {
+                type: "static",
+                content: "auto"
+              },
+              marginBottom: {
+                type: "static",
+                content: "auto"
+              },
+              marginLeft: {
+                type: "static",
+                content: "auto"
+              },
+              "@media(max-width: 479px)": {
+                type: "nested-style",
+                content: {
+                  borderTopLeftRadius: {
+                    type: "static",
+                    content: "2%"
+                  },
+                  borderTopRightRadius: {
+                    type: "static",
+                    content: "2%"
+                  },
+                  borderBottomLeftRadius: {
+                    type: "static",
+                    content: "2%"
+                  },
+                  borderBottomRightRadius: {
+                    type: "static",
+                    content: "2%"
+                  },
+                  height: {
+                    type: "static",
+                    content: "300px"
+                  },
+                  width: {
+                    type: "static",
+                    content: "300px"
+                  },
+                  marginTop: {
+                    type: "static",
+                    content: "auto"
+                  },
+                  marginRight: {
+                    type: "static",
+                    content: "auto"
+                  },
+                  marginBottom: {
+                    type: "static",
+                    content: "auto"
+                  },
+                  marginLeft: {
+                    type: "static",
+                    content: "auto"
+                  },
+                  margin: {
+                    type: "static",
+                    content: "20px auto"
+                  }
+                }
+              }
+            },
+            attrs: {}
           }
         }
-      ]
+      ],
+      style: {
+        backgroundColor: {
+          type: "static",
+          content: "#fcfcfc"
+        },
+        display: {
+          type: "static",
+          content: "block"
+        },
+        fontFamily: {
+          type: "static",
+          content: "Open Sans"
+        },
+        width: {
+          type: "static",
+          content: "100%"
+        },
+        height: {
+          type: "static",
+          content: "100%"
+        },
+        overflow: {
+          type: "static",
+          content: "auto"
+        }
+      },
+      attrs: {}
     }
-  }
+  },
+  propDefinitions: {}
 };
 
 module.exports = myComponent;
