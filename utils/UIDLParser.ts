@@ -1,5 +1,5 @@
 import { UIDLNode } from "../interfaces/UIDL";
-const myimport = require("./componentfile");
+//const myimport = require("./componentfile");
 const htmlMap = require("../utils/html-mapping.json");
 
 // const getComponent = (tree: UIDLNode, depth: number = 0) => {
@@ -55,7 +55,7 @@ const flatten = (obj, depthLevel = 0) => {
     return acc;
   }, []);
 };
-console.log(flatten(myimport.node.content));
+//console.log(flatten(myimport.node.content));
 // console.log("Result: ", getComponent(myimport.node));
 
-export default {};
+export default flatten;

@@ -1,285 +1,375 @@
 const myComponent = {
-  $schema: "https://docs.teleporthq.io/uidl-schema/v1/component.json",
-  name: "Page",
-  node: {
-    type: "element",
-    content: {
-      elementType: "container",
-      name: "page",
-      children: [
+  "$schema": "https://docs.teleporthq.io/uidl-schema/v1/component.json",
+  "name": "Page",
+  "node": {
+    "type": "element",
+    "content": {
+      "elementType": "container",
+      "name": "page",
+      "children": [
         {
-          type: "element",
-          content: {
-            elementType: "container",
-            name: "container",
-            children: [
+          "type": "element",
+          "content": {
+            "elementType": "text",
+            "name": "text",
+            "children": [
               {
-                type: "element",
-                content: {
-                  elementType: "heading1",
-                  name: "heading1",
-                  children: [
+                "type": "static",
+                "content": "Hello"
+              }
+            ],
+            "style": {
+              "fontWeight": {
+                "type": "static",
+                "content": "lighter"
+              },
+              "fontSize": {
+                "type": "static",
+                "content": "160px"
+              }
+            },
+            "attrs": {}
+          }
+        },
+        {
+          "type": "element",
+          "content": {
+            "elementType": "container",
+            "name": "container",
+            "children": [
+              {
+                "type": "element",
+                "content": {
+                  "elementType": "text",
+                  "name": "text",
+                  "children": [
                     {
-                      type: "static",
-                      content: "Vlad Grecu"
+                      "type": "static",
+                      "content": "Text"
                     }
                   ],
-                  style: {
-                    fontSize: {
-                      type: "static",
-                      content: "2em"
-                    },
-                    marginTop: {
-                      type: "static",
-                      content: "0.67em"
-                    },
-                    marginBottom: {
-                      type: "static",
-                      content: "0.67em"
-                    },
-                    color: {
-                      type: "static",
-                      content: "white"
-                    },
-                    textAlign: {
-                      type: "static",
-                      content: "center"
-                    },
-                    "@media(max-width: 479px)": {
-                      type: "nested-style",
-                      content: {
-                        textAlign: {
-                          type: "static",
-                          content: "center"
-                        }
-                      }
-                    }
-                  },
-                  attrs: {}
+                  "style": {},
+                  "attrs": {}
                 }
               },
               {
-                type: "element",
-                content: {
-                  elementType: "container",
-                  name: "container",
-                  children: [],
-                  style: {
-                    width: {
-                      type: "static",
-                      content: "100px"
-                    },
-                    height: {
-                      type: "static",
-                      content: "100px"
-                    },
-                    backgroundColor: {
-                      type: "static",
-                      content: "#ffffff"
-                    },
-                    margin: {
-                      type: "static",
-                      content: "auto"
-                    },
-                    borderRadius: {
-                      type: "static",
-                      content: "50%"
-                    },
-                    "@media(max-width: 479px)": {
-                      type: "nested-style",
-                      content: {
-                        backgroundColor: {
-                          type: "static",
-                          content: "#d14141"
-                        },
-                        margin: {
-                          type: "static",
-                          content: "auto"
-                        },
-                        padding: {
-                          type: "static",
-                          content: "0"
-                        }
-                      }
-                    }
-                  },
-                  attrs: {}
-                }
-              },
-              {
-                type: "element",
-                content: {
-                  elementType: "heading6",
-                  name: "heading6",
-                  children: [
+                "type": "element",
+                "content": {
+                  "elementType": "heading6",
+                  "name": "heading6",
+                  "children": [
                     {
-                      type: "static",
-                      content: "Heading Level 6"
+                      "type": "static",
+                      "content": "Heading Level 6"
                     }
                   ],
-                  style: {
-                    fontSize: {
-                      type: "static",
-                      content: ".75em"
+                  "style": {
+                    "fontSize": {
+                      "type": "static",
+                      "content": ".75em"
                     },
-                    marginTop: {
-                      type: "static",
-                      content: "2.33em"
+                    "marginTop": {
+                      "type": "static",
+                      "content": "2.33em"
                     },
-                    marginBottom: {
-                      type: "static",
-                      content: "2.33em"
-                    },
-                    color: {
-                      type: "static",
-                      content: "#ffffff"
-                    },
-                    margin: {
-                      type: "static",
-                      content: "auto"
-                    },
-                    border: {
-                      type: "static",
-                      content: "1px solid red"
-                    },
-                    textAlign: {
-                      type: "static",
-                      content: "center"
+                    "marginBottom": {
+                      "type": "static",
+                      "content": "2.33em"
                     }
                   },
-                  attrs: {}
+                  "attrs": {}
                 }
               }
             ],
-            style: {
-              height: {
-                type: "static",
-                content: "300px"
+            "style": {
+              "width": {
+                "type": "static",
+                "content": "200px"
               },
-              backgroundColor: {
-                type: "static",
-                content: "black"
+              "height": {
+                "type": "static",
+                "content": "100px"
               },
-              borderRadius: {
-                type: "static",
-                content: "2%"
-              },
-              border: {
-                type: "static",
-                content: "1px solid red"
-              },
-              padding: {
-                type: "static",
-                content: "30px"
-              },
-              boxSizing: {
-                type: "static",
-                content: "border-box"
-              },
-              width: {
-                type: "static",
-                content: "300px"
-              },
-              marginTop: {
-                type: "static",
-                content: "auto"
-              },
-              marginRight: {
-                type: "static",
-                content: "auto"
-              },
-              marginBottom: {
-                type: "static",
-                content: "auto"
-              },
-              marginLeft: {
-                type: "static",
-                content: "auto"
-              },
-              "@media(max-width: 479px)": {
-                type: "nested-style",
-                content: {
-                  borderTopLeftRadius: {
-                    type: "static",
-                    content: "2%"
-                  },
-                  borderTopRightRadius: {
-                    type: "static",
-                    content: "2%"
-                  },
-                  borderBottomLeftRadius: {
-                    type: "static",
-                    content: "2%"
-                  },
-                  borderBottomRightRadius: {
-                    type: "static",
-                    content: "2%"
-                  },
-                  height: {
-                    type: "static",
-                    content: "300px"
-                  },
-                  width: {
-                    type: "static",
-                    content: "300px"
-                  },
-                  marginTop: {
-                    type: "static",
-                    content: "auto"
-                  },
-                  marginRight: {
-                    type: "static",
-                    content: "auto"
-                  },
-                  marginBottom: {
-                    type: "static",
-                    content: "auto"
-                  },
-                  marginLeft: {
-                    type: "static",
-                    content: "auto"
-                  },
-                  margin: {
-                    type: "static",
-                    content: "20px auto"
-                  }
-                }
+              "backgroundColor": {
+                "type": "static",
+                "content": "rgba(20, 20, 20, 0.2)"
               }
             },
-            attrs: {}
+            "attrs": {}
+          }
+        },
+        {
+          "type": "element",
+          "content": {
+            "elementType": "link",
+            "name": "link",
+            "children": [
+              {
+                "type": "static",
+                "content": "Teleport Yourself"
+              }
+            ],
+            "style": {
+              "textDecoration": {
+                "type": "static",
+                "content": "underline"
+              },
+              "color": {
+                "type": "static",
+                "content": "#000"
+              },
+              "position": {
+                "type": "static",
+                "content": "absolute"
+              },
+              "top": {
+                "type": "static",
+                "content": "10px"
+              },
+              "right": {
+                "type": "static",
+                "content": "50px"
+              }
+            },
+            "attrs": {
+              "href": {
+                "type": "static",
+                "content": "https://teleporthq.io"
+              },
+              "target": {
+                "type": "static",
+                "content": "_blank"
+              }
+            }
+          }
+        },
+        {
+          "type": "element",
+          "content": {
+            "elementType": "image",
+            "name": "image",
+            "children": [],
+            "style": {
+              "width": {
+                "type": "static",
+                "content": "200px"
+              },
+              "position": {
+                "type": "static",
+                "content": "absolute"
+              },
+              "top": {
+                "type": "static",
+                "content": "50px"
+              },
+              "left": {
+                "type": "static",
+                "content": "500px"
+              },
+              "opacity": {
+                "type": "static",
+                "content": "0.55"
+              }
+            },
+            "attrs": {
+              "src": {
+                "type": "static",
+                "content": "https://images.unsplash.com/photo-1580371544413-49388e6beb21?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjkxMzIxfQ"
+              }
+            }
+          }
+        },
+        {
+          "type": "element",
+          "content": {
+            "elementType": "container",
+            "name": "container",
+            "children": [
+              {
+                "type": "element",
+                "content": {
+                  "elementType": "text",
+                  "name": "text",
+                  "children": [
+                    {
+                      "type": "static",
+                      "content": "Text"
+                    }
+                  ],
+                  "style": {},
+                  "attrs": {}
+                }
+              },
+              {
+                "type": "element",
+                "content": {
+                  "elementType": "text",
+                  "name": "text",
+                  "children": [
+                    {
+                      "type": "static",
+                      "content": "Text"
+                    }
+                  ],
+                  "style": {},
+                  "attrs": {}
+                }
+              },
+              {
+                "type": "element",
+                "content": {
+                  "elementType": "text",
+                  "name": "text",
+                  "children": [
+                    {
+                      "type": "static",
+                      "content": "Text"
+                    }
+                  ],
+                  "style": {},
+                  "attrs": {}
+                }
+              },
+              {
+                "type": "element",
+                "content": {
+                  "elementType": "text",
+                  "name": "text",
+                  "children": [
+                    {
+                      "type": "static",
+                      "content": "Text"
+                    }
+                  ],
+                  "style": {},
+                  "attrs": {}
+                }
+              }
+            ],
+            "style": {
+              "display": {
+                "type": "static",
+                "content": "grid"
+              },
+              "height": {
+                "type": "static",
+                "content": "100px"
+              },
+              "backgroundColor": {
+                "type": "static",
+                "content": "rgba(20, 20, 20, 0.2)"
+              },
+              "gridGap": {
+                "type": "static",
+                "content": "10px"
+              },
+              "gridTemplateColumns": {
+                "type": "static",
+                "content": "1fr 1fr"
+              },
+              "gridTemplateRows": {
+                "type": "static",
+                "content": "auto auto"
+              },
+              "width": {
+                "type": "static",
+                "content": "300px"
+              },
+              "margin": {
+                "type": "static",
+                "content": "50px"
+              },
+              "padding": {
+                "type": "static",
+                "content": "1px"
+              },
+              "borderWidth": {
+                "type": "static",
+                "content": "6px"
+              },
+              "borderStyle": {
+                "type": "static",
+                "content": "solid"
+              },
+              "borderRadius": {
+                "type": "static",
+                "content": "15px"
+              }
+            },
+            "attrs": {}
+          }
+        },
+        {
+          "type": "element",
+          "content": {
+            "elementType": "textblock",
+            "name": "textblock",
+            "children": [
+              {
+                "type": "static",
+                "content": "Paragraph"
+              }
+            ],
+            "style": {
+              "marginTop": {
+                "type": "static",
+                "content": "1em"
+              },
+              "marginBottom": {
+                "type": "static",
+                "content": "1em"
+              }
+            },
+            "attrs": {}
           }
         }
       ],
-      style: {
-        backgroundColor: {
-          type: "static",
-          content: "#fcfcfc"
+      "style": {
+        "backgroundColor": {
+          "type": "static",
+          "content": "#fdf"
         },
-        display: {
-          type: "static",
-          content: "block"
+        "display": {
+          "type": "static",
+          "content": "block"
         },
-        fontFamily: {
-          type: "static",
-          content: "Open Sans"
+        "fontFamily": {
+          "type": "static",
+          "content": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Roboto\", \"Oxygen\",\"Ubuntu\", \"Cantarell\", \"Fira Sans\",\"Droid Sans\", \"Helvetica Neue\", sans-serif"
         },
-        width: {
-          type: "static",
-          content: "100%"
+        "fontSize": {
+          "type": "static",
+          "content": "16px"
         },
-        height: {
-          type: "static",
-          content: "100%"
+        "overflow": {
+          "type": "static",
+          "content": "auto"
         },
-        overflow: {
-          type: "static",
-          content: "auto"
+        "width": {
+          "type": "static",
+          "content": "100%"
+        },
+        "minHeight": {
+          "type": "static",
+          "content": "100%"
+        },
+        "position": {
+          "type": "static",
+          "content": "static"
+        },
+        "right": {
+          "type": "static",
+          "content": "px"
+        },
+        "top": {
+          "type": "static",
+          "content": "px"
         }
       },
-      attrs: {}
+      "attrs": {}
     }
   },
-  propDefinitions: {}
+  "propDefinitions": {}
 };
 
 module.exports = myComponent;
