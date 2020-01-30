@@ -5,6 +5,11 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = 0) => {
   const array: UIDLElementContent[] = Array.isArray(obj) ? obj : [obj];
 
   return array.reduce((acc: UIDLElementContent[], value) => {
+    if (value.node) {
+      const nestedNode = UILDParser(value.node.content, depthLevel + 1);
+      acc = acc.concat(...nestedNode);
+      delete value.node;
+    }
     if (value.elementType) {
       // PREVIOUS IMPLEMENTATION
       // let myResult: string = htmlMap.elements[value.elementType]

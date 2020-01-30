@@ -18,7 +18,7 @@ export interface UIDLElementNode {
 }
 
 export interface UIDLElementContent {
-  node?: string | object | UIDLElementContent;
+  node?: any;
   content?: string;
   elementType?: string;
   elementInfo?: object;

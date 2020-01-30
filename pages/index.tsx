@@ -1,22 +1,21 @@
 import { NextPage } from "next";
-import { useState, useEffect } from "react";
-import flatten from "../utils/UIDLParser";
-import input from "../utils/componentfile";
-import { UIDLElementContent } from "../interfaces/UIDL";
+import "../utils/UIDLToHtml";
+import UIDLToHtml from "../utils/UIDLToHtml";
+import UIDLParser from "../utils/UIDLParser";
+const myimport = require("../utils/componentfile");
 
-const Home: NextPage<{ userAgent: string }> = ({ userAgent }) => {
-  const [ourInput, setOurInput] = useState<UIDLElementContent[] | null>(null);
-  console.log(ourInput);
+const Home: NextPage<{ userAgent: string }> = () => {
+  console.log(UIDLParser(JSON.parse(JSON.stringify(myimport.node.content))));
 
-  useEffect(() => {
-    const ex = JSON.parse(JSON.stringify(input));
-    setOurInput(flatten(ex.node.content));
-  }, []);
   return (
-    <div>
-      <div>Landing</div>
-      <div>Wraper</div>
-    </div>
+    <div
+      style={{ height: "100vh", padding: "20%" }}
+      dangerouslySetInnerHTML={{
+        __html: UIDLToHtml(
+          UIDLParser(JSON.parse(JSON.stringify(myimport.node.content)))
+        )
+      }}
+    ></div>
   );
 };
 
