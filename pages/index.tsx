@@ -8,7 +8,7 @@ const Home: NextPage<{ userAgent: string }> = () => {
   console.log(flatten(JSON.parse(JSON.stringify(myimport.node.content))))
 
   return (
-<div style={{height: "100vh"}} dangerouslySetInnerHTML={{__html : UIDLToHtml(flatten(JSON.parse(JSON.stringify(myimport.node.content))))}}></div>
+    <div style={{height: "100vh"}} dangerouslySetInnerHTML={{__html : UIDLToHtml(flatten(JSON.parse(JSON.stringify(myimport.node.content))))}}></div>  
 )};
 
 export default Home;

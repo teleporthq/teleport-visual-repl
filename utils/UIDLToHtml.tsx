@@ -30,12 +30,14 @@ function getAttrContents(result : string, object : object){
 const UIDLToHtml = (UIDLArray:object[]) => {
     let stack:string[] = []
     let prevDepth:number = -1;
-    
     let result = UIDLArray.reduce((accumulator : string, entry:ParsedUIDLNode) => {
         if(typeof entry.elementInfo === "string"){
             return accumulator += entry.elementInfo
         }
-        if(prevDepth >= entry.depthLevel){
+
+        //more depth means that multiple opened tags must close
+        while(prevDepth >= entry.depthLevel){
+            prevDepth -= 1;
             accumulator += "</" + stack.pop() + ">"
         }
         accumulator += "<";
@@ -43,7 +45,6 @@ const UIDLToHtml = (UIDLArray:object[]) => {
 
         Object.keys(entry.elementInfo).forEach(key =>{
             if(key === "elementType"){
-
                 accumulator += entry.elementInfo[key] + " "
                 return
             }
