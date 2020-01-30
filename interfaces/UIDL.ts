@@ -1,6 +1,8 @@
 export interface UIDLNode {
-  type: string;
-  content: any;
+  type?: string;
+  content?: any;
+  elementInfo?: any;
+  depthLevel?: number;
 }
 
 export interface UIDLElementNode {
@@ -13,4 +15,17 @@ export interface UIDLElementNode {
     events?: any;
     children?: UIDLNode[];
   };
+}
+
+export interface UIDLElementContent {
+  node?: string | object | UIDLElementContent;
+  content?: string;
+  elementType?: string;
+  elementInfo?: object;
+  depthLevel: number;
+  name?: string;
+  style?: any;
+  attrs?: any;
+  events?: any;
+  children?: UIDLNode[];
 }
