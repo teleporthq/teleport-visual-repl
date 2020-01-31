@@ -18,6 +18,7 @@ export interface UIDLElementNode {
 }
 
 export interface UIDLElementContent {
+  type?: string;
   node?: any;
   content?: string;
   elementType?: string;
@@ -28,4 +29,5 @@ export interface UIDLElementContent {
   attrs?: any;
   events?: any;
   children?: UIDLNode[];
+  dataSource?: object;
 }
