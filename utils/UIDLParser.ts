@@ -58,4 +58,4 @@ const flatten = (obj, depthLevel = 0) => {
 console.log(flatten(myimport.node.content));
 // console.log("Result: ", getComponent(myimport.node));
 
-export default {};
+export default flatten;

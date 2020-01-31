@@ -12,9 +12,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@zeit/next-css": "^1.0.1",
     "next": "^9.2.1",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-ace": "^8.0.0",
+    "react-dom": "^16.12.0",
+    "react-spring": "^8.0.27",
+    "styled-jsx": "^3.2.4"
   },
   "devDependencies": {
     "@types/node": "^13.5.0",
