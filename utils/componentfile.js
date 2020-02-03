@@ -5,10 +5,6 @@ const myComponent = {
     isVisible: {
       type: "boolean",
       defaultValue: true
-    },
-    isAlive: {
-      type: "boolean",
-      defaultValue: true
     }
   },
   node: {
@@ -34,7 +30,7 @@ const myComponent = {
                 children: [
                   {
                     type: "static",
-                    content: "If you can see me!"
+                    content: "Now you see me!"
                   }
                 ]
               }
@@ -48,7 +44,7 @@ const myComponent = {
               type: "dynamic",
               content: {
                 referenceType: "state",
-                id: "isAlive"
+                id: "isVisible"
               }
             },
             value: true,
@@ -59,7 +55,7 @@ const myComponent = {
                 children: [
                   {
                     type: "static",
-                    content: "I am alive!"
+                    content: "Now you see me!"
                   }
                 ]
               }

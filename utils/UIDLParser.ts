@@ -5,16 +5,15 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
   const array: UIDLElementContent[] = Array.isArray(obj) ? obj : [obj];
 
   return array.reduce(
-    (acc: UIDLElementContent[], value: UIDLElementContent, index: number) => {
+    (acc: UIDLElementContent[], value: UIDLElementContent) => {
       if (value.reference && !value.value) {
-        // console.log(value,index);
-        value.test = "test";
+        value.filterCondition = "filter";
         delete value.node;
         delete value.reference;
       }
       if (value.node) {
         if (depthLevel !== -1) {
-          value.test = "test";
+          value.filterCondition = "filter";
         }
         const nestedNode = UILDParser(value.node.content, depthLevel + 1);
         acc = acc.concat(...nestedNode);
@@ -40,7 +39,9 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
         delete value.children;
       }
 
-      return acc.filter(element => element.elementInfo["test"] !== "test");
+      return acc.filter(
+        element => element.elementInfo["filterCondition"] !== "filter"
+      );
     },
     []
   );

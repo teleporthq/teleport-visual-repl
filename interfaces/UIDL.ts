@@ -23,7 +23,7 @@ export interface UIDLElementContent {
   content?: string;
   elementType?: string;
   elementInfo?: object;
-  depthLevel: number;
+  depthLevel?: number;
   name?: string;
   style?: any;
   attrs?: any;
@@ -32,5 +32,5 @@ export interface UIDLElementContent {
   dataSource?: object;
   reference?: object;
   value?: boolean | string;
-  test?: any;
+  filterCondition?: any;
 }
