@@ -1,7 +1,7 @@
 import { UIDLElementContent } from "../interfaces/UIDL";
 const htmlMap = require("../utils/html-mapping.json");
 
-const UILDParser = (obj: UIDLElementContent, depthLevel: number = 0) => {
+const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
   const array: UIDLElementContent[] = Array.isArray(obj) ? obj : [obj];
 
   return array.reduce((acc: UIDLElementContent[], value) => {
@@ -10,31 +10,26 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = 0) => {
       acc = acc.concat(...nestedNode);
       delete value.node;
     }
-    if (value.elementType) {
-      // PREVIOUS IMPLEMENTATION
-      // let myResult: string = htmlMap.elements[value.elementType]
-      //   ? htmlMap.elements[value.elementType].elementType
-      //   : value.elementType;
-      // value.elementType = myResult;
 
-      // OPTIONAL CHAINING
+    if (value.elementType) {
       value.elementType =
         htmlMap.elements[value.elementType]?.elementType || value.elementType;
     }
 
     acc.push({ elementInfo: value, depthLevel });
-    if (value.children) {
-      // value.children.forEach(
-      //   child => (acc = [...acc, ...UILDParser(child.content, depthLevel + 1)])
-      // );
 
-      const newValues = value.children.map(child =>
-        UILDParser(child.content, depthLevel + 1)
-      );
+    if (value.children) {
+      // let test = value.children.filter(child => child.type !== "conditional");
+      // console.log(test);
+
+      const newValues = value.children.map(child => {
+        return UILDParser(child.content, depthLevel + 1);
+      });
       acc = acc.concat(...newValues);
 
       delete value.children;
     }
+
     return acc;
   }, []);
 };
