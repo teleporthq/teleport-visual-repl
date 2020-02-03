@@ -48,6 +48,9 @@ const UIDLToHtml = (UIDLArray:object[]) => {
     let prevDepth:number = -1;
     let styleResult : string = "";
     let htmlResult : string = UIDLArray.reduce((accumulator : string, entry:ParsedUIDLNode) => {
+        if(entry.depthLevel === -1){
+            return accumulator
+        }
         counter += 1;
         if(typeof entry.elementInfo === "string"){
             return accumulator += entry.elementInfo

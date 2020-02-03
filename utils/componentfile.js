@@ -73,7 +73,7 @@ const myComponent = {
               },
               "left": {
                 "type": "static",
-                "content": "500px"
+                "content": "2000px"
               },
               "opacity": {
                 "type": "static",
@@ -97,6 +97,24 @@ const myComponent = {
                   "left": {
                     "type": "static",
                     "content": "100px"
+                  }
+                }
+              },
+              "@media(max-width: 767px)": {
+                "type": "nested-style",
+                "content": {
+                  "left": {
+                    "type": "static",
+                    "content": "px"
+                  }
+                }
+              },
+              "@media(max-width: 991px)": {
+                "type": "nested-style",
+                "content": {
+                  "left": {
+                    "type": "static",
+                    "content": "1500px"
                   }
                 }
               }
@@ -153,6 +171,218 @@ const myComponent = {
             },
             "attrs": {}
           }
+        },
+        {
+          "type": "element",
+          "content": {
+            "elementType": "container",
+            "name": "container",
+            "children": [
+              {
+                "type": "element",
+                "content": {
+                  "elementType": "text",
+                  "name": "text",
+                  "children": [
+                    {
+                      "type": "static",
+                      "content": "Text"
+                    }
+                  ],
+                  "style": {},
+                  "attrs": {}
+                }
+              },
+              {
+                "type": "element",
+                "content": {
+                  "elementType": "textblock",
+                  "name": "textblock",
+                  "children": [
+                    {
+                      "type": "static",
+                      "content": "Paragraph"
+                    }
+                  ],
+                  "style": {
+                    "marginTop": {
+                      "type": "static",
+                      "content": "1em"
+                    },
+                    "marginBottom": {
+                      "type": "static",
+                      "content": "1em"
+                    }
+                  },
+                  "attrs": {}
+                }
+              }
+            ],
+            "style": {
+              "width": {
+                "type": "static",
+                "content": "200px"
+              },
+              "height": {
+                "type": "static",
+                "content": "100px"
+              },
+              "backgroundColor": {
+                "type": "static",
+                "content": "rgba(20, 20, 20, 0.2)"
+              }
+            },
+            "attrs": {}
+          }
+        },
+        {
+          "type": "element",
+          "content": {
+            "elementType": "container",
+            "name": "container",
+            "children": [
+              {
+                "type": "element",
+                "content": {
+                  "elementType": "textblock",
+                  "name": "textblock",
+                  "children": [
+                    {
+                      "type": "static",
+                      "content": "Paragraph"
+                    }
+                  ],
+                  "style": {
+                    "marginTop": {
+                      "type": "static",
+                      "content": "1em"
+                    },
+                    "marginBottom": {
+                      "type": "static",
+                      "content": "1em"
+                    }
+                  },
+                  "attrs": {}
+                }
+              },
+              {
+                "type": "element",
+                "content": {
+                  "elementType": "textblock",
+                  "name": "textblock",
+                  "children": [
+                    {
+                      "type": "static",
+                      "content": "Paragraph"
+                    }
+                  ],
+                  "style": {
+                    "marginTop": {
+                      "type": "static",
+                      "content": "1em"
+                    },
+                    "marginBottom": {
+                      "type": "static",
+                      "content": "1em"
+                    }
+                  },
+                  "attrs": {}
+                }
+              },
+              {
+                "type": "element",
+                "content": {
+                  "elementType": "textblock",
+                  "name": "textblock",
+                  "children": [
+                    {
+                      "type": "static",
+                      "content": "Paragraph"
+                    }
+                  ],
+                  "style": {
+                    "marginTop": {
+                      "type": "static",
+                      "content": "1em"
+                    },
+                    "marginBottom": {
+                      "type": "static",
+                      "content": "1em"
+                    }
+                  },
+                  "attrs": {}
+                }
+              },
+              {
+                "type": "element",
+                "content": {
+                  "elementType": "textblock",
+                  "name": "textblock",
+                  "children": [
+                    {
+                      "type": "static",
+                      "content": "Paragraph"
+                    }
+                  ],
+                  "style": {
+                    "marginTop": {
+                      "type": "static",
+                      "content": "1em"
+                    },
+                    "marginBottom": {
+                      "type": "static",
+                      "content": "1em"
+                    }
+                  },
+                  "attrs": {}
+                }
+              }
+            ],
+            "style": {
+              "display": {
+                "type": "static",
+                "content": "grid"
+              },
+              "width": {
+                "type": "static",
+                "content": "200px"
+              },
+              "height": {
+                "type": "static",
+                "content": "100px"
+              },
+              "backgroundColor": {
+                "type": "static",
+                "content": "rgba(20, 20, 20, 0.2)"
+              },
+              "gridGap": {
+                "type": "static",
+                "content": "10px"
+              },
+              "gridTemplateColumns": {
+                "type": "static",
+                "content": "1fr 1fr"
+              },
+              "gridTemplateRows": {
+                "type": "static",
+                "content": "auto auto"
+              },
+              "@media(max-width: 767px)": {
+                "type": "nested-style",
+                "content": {
+                  "width": {
+                    "type": "static",
+                    "content": "290px"
+                  },
+                  "height": {
+                    "type": "static",
+                    "content": "100px"
+                  }
+                }
+              }
+            },
+            "attrs": {}
+          }
         }
       ],
       "style": {
@@ -201,6 +431,5 @@ const myComponent = {
     }
   },
   "propDefinitions": {}
-};
-
+}
 module.exports = myComponent;
