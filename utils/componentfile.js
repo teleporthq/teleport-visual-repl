@@ -1,285 +1,206 @@
 const myComponent = {
-  $schema: "https://docs.teleporthq.io/uidl-schema/v1/component.json",
-  name: "Page",
-  node: {
-    type: "element",
-    content: {
-      elementType: "container",
-      name: "page",
-      children: [
+  "$schema": "https://docs.teleporthq.io/uidl-schema/v1/component.json",
+  "name": "Page",
+  "node": {
+    "type": "element",
+    "content": {
+      "elementType": "container",
+      "name": "page",
+      "children": [
         {
-          type: "element",
-          content: {
-            elementType: "container",
-            name: "container",
-            children: [
+          "type": "element",
+          "content": {
+            "elementType": "link",
+            "name": "link",
+            "children": [
               {
-                type: "element",
-                content: {
-                  elementType: "heading1",
-                  name: "heading1",
-                  children: [
-                    {
-                      type: "static",
-                      content: "Vlad Grecu"
-                    }
-                  ],
-                  style: {
-                    fontSize: {
-                      type: "static",
-                      content: "2em"
-                    },
-                    marginTop: {
-                      type: "static",
-                      content: "0.67em"
-                    },
-                    marginBottom: {
-                      type: "static",
-                      content: "0.67em"
-                    },
-                    color: {
-                      type: "static",
-                      content: "white"
-                    },
-                    textAlign: {
-                      type: "static",
-                      content: "center"
-                    },
-                    "@media(max-width: 479px)": {
-                      type: "nested-style",
-                      content: {
-                        textAlign: {
-                          type: "static",
-                          content: "center"
-                        }
-                      }
-                    }
-                  },
-                  attrs: {}
-                }
-              },
-              {
-                type: "element",
-                content: {
-                  elementType: "container",
-                  name: "container",
-                  children: [],
-                  style: {
-                    width: {
-                      type: "static",
-                      content: "100px"
-                    },
-                    height: {
-                      type: "static",
-                      content: "100px"
-                    },
-                    backgroundColor: {
-                      type: "static",
-                      content: "#ffffff"
-                    },
-                    margin: {
-                      type: "static",
-                      content: "auto"
-                    },
-                    borderRadius: {
-                      type: "static",
-                      content: "50%"
-                    },
-                    "@media(max-width: 479px)": {
-                      type: "nested-style",
-                      content: {
-                        backgroundColor: {
-                          type: "static",
-                          content: "#d14141"
-                        },
-                        margin: {
-                          type: "static",
-                          content: "auto"
-                        },
-                        padding: {
-                          type: "static",
-                          content: "0"
-                        }
-                      }
-                    }
-                  },
-                  attrs: {}
-                }
-              },
-              {
-                type: "element",
-                content: {
-                  elementType: "heading6",
-                  name: "heading6",
-                  children: [
-                    {
-                      type: "static",
-                      content: "Heading Level 6"
-                    }
-                  ],
-                  style: {
-                    fontSize: {
-                      type: "static",
-                      content: ".75em"
-                    },
-                    marginTop: {
-                      type: "static",
-                      content: "2.33em"
-                    },
-                    marginBottom: {
-                      type: "static",
-                      content: "2.33em"
-                    },
-                    color: {
-                      type: "static",
-                      content: "#ffffff"
-                    },
-                    margin: {
-                      type: "static",
-                      content: "auto"
-                    },
-                    border: {
-                      type: "static",
-                      content: "1px solid red"
-                    },
-                    textAlign: {
-                      type: "static",
-                      content: "center"
-                    }
-                  },
-                  attrs: {}
-                }
+                "type": "static",
+                "content": "Teleport Yourself"
               }
             ],
-            style: {
-              height: {
-                type: "static",
-                content: "300px"
+            "style": {
+              "textDecoration": {
+                "type": "static",
+                "content": "underline"
               },
-              backgroundColor: {
-                type: "static",
-                content: "black"
+              "color": {
+                "type": "static",
+                "content": "#000"
               },
-              borderRadius: {
-                type: "static",
-                content: "2%"
+              "position": {
+                "type": "static",
+                "content": "absolute"
               },
-              border: {
-                type: "static",
-                content: "1px solid red"
+              "top": {
+                "type": "static",
+                "content": "10px"
               },
-              padding: {
-                type: "static",
-                content: "30px"
+              "right": {
+                "type": "static",
+                "content": "50px"
+              }
+            },
+            "attrs": {
+              "href": {
+                "type": "static",
+                "content": "https://teleporthq.io"
               },
-              boxSizing: {
-                type: "static",
-                content: "border-box"
+              "target": {
+                "type": "static",
+                "content": "_blank"
+              }
+            }
+          }
+        },
+        {
+          "type": "element",
+          "content": {
+            "elementType": "image",
+            "name": "image",
+            "children": [],
+            "style": {
+              "width": {
+                "type": "static",
+                "content": "200px"
               },
-              width: {
-                type: "static",
-                content: "300px"
+              "position": {
+                "type": "static",
+                "content": "absolute"
               },
-              marginTop: {
-                type: "static",
-                content: "auto"
+              "top": {
+                "type": "static",
+                "content": "50px"
               },
-              marginRight: {
-                type: "static",
-                content: "auto"
+              "left": {
+                "type": "static",
+                "content": "500px"
               },
-              marginBottom: {
-                type: "static",
-                content: "auto"
+              "opacity": {
+                "type": "static",
+                "content": "0.55"
               },
-              marginLeft: {
-                type: "static",
-                content: "auto"
+              "transitionDuration": {
+                "type": "static",
+                "content": "2s"
+              },
+              "transitionTimingFunction": {
+                "type": "static",
+                "content": "ease-in-out"
+              },
+              "transitionDelay": {
+                "type": "static",
+                "content": "5s"
               },
               "@media(max-width: 479px)": {
-                type: "nested-style",
-                content: {
-                  borderTopLeftRadius: {
-                    type: "static",
-                    content: "2%"
-                  },
-                  borderTopRightRadius: {
-                    type: "static",
-                    content: "2%"
-                  },
-                  borderBottomLeftRadius: {
-                    type: "static",
-                    content: "2%"
-                  },
-                  borderBottomRightRadius: {
-                    type: "static",
-                    content: "2%"
-                  },
-                  height: {
-                    type: "static",
-                    content: "300px"
-                  },
-                  width: {
-                    type: "static",
-                    content: "300px"
-                  },
-                  marginTop: {
-                    type: "static",
-                    content: "auto"
-                  },
-                  marginRight: {
-                    type: "static",
-                    content: "auto"
-                  },
-                  marginBottom: {
-                    type: "static",
-                    content: "auto"
-                  },
-                  marginLeft: {
-                    type: "static",
-                    content: "auto"
-                  },
-                  margin: {
-                    type: "static",
-                    content: "20px auto"
+                "type": "nested-style",
+                "content": {
+                  "left": {
+                    "type": "static",
+                    "content": "100px"
                   }
                 }
               }
             },
-            attrs: {}
+            "attrs": {
+              "src": {
+                "type": "static",
+                "content": "https://images.unsplash.com/photo-1580371544413-49388e6beb21?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjkxMzIxfQ"
+              }
+            }
+          }
+        },
+        {
+          "type": "element",
+          "content": {
+            "elementType": "textblock",
+            "name": "textblock",
+            "children": [
+              {
+                "type": "static",
+                "content": "Paragraph"
+              }
+            ],
+            "style": {
+              "marginTop": {
+                "type": "static",
+                "content": "1em"
+              },
+              "marginBottom": {
+                "type": "static",
+                "content": "1em"
+              },
+              "@media(max-width: 767px)": {
+                "type": "nested-style",
+                "content": {
+                  "borderWidth": {
+                    "type": "static",
+                    "content": "5px"
+                  },
+                  "borderStyle": {
+                    "type": "static",
+                    "content": "solid"
+                  },
+                  "borderRadius": {
+                    "type": "static",
+                    "content": "100px"
+                  },
+                  "position": {
+                    "type": "static",
+                    "content": "static"
+                  }
+                }
+              }
+            },
+            "attrs": {}
           }
         }
       ],
-      style: {
-        backgroundColor: {
-          type: "static",
-          content: "#fcfcfc"
+      "style": {
+        "backgroundColor": {
+          "type": "static",
+          "content": "#fdf"
         },
-        display: {
-          type: "static",
-          content: "block"
+        "display": {
+          "type": "static",
+          "content": "block"
         },
-        fontFamily: {
-          type: "static",
-          content: "Open Sans"
+        "fontFamily": {
+          "type": "static",
+          "content": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Roboto\", \"Oxygen\",\"Ubuntu\", \"Cantarell\", \"Fira Sans\",\"Droid Sans\", \"Helvetica Neue\", sans-serif"
         },
-        width: {
-          type: "static",
-          content: "100%"
+        "fontSize": {
+          "type": "static",
+          "content": "16px"
         },
-        height: {
-          type: "static",
-          content: "100%"
+        "overflow": {
+          "type": "static",
+          "content": "auto"
         },
-        overflow: {
-          type: "static",
-          content: "auto"
+        "width": {
+          "type": "static",
+          "content": "100%"
+        },
+        "minHeight": {
+          "type": "static",
+          "content": "100%"
+        },
+        "position": {
+          "type": "static",
+          "content": "static"
+        },
+        "right": {
+          "type": "static",
+          "content": "px"
+        },
+        "top": {
+          "type": "static",
+          "content": "px"
         }
       },
-      attrs: {}
+      "attrs": {}
     }
   },
-  propDefinitions: {}
+  "propDefinitions": {}
 };
 
 module.exports = myComponent;

@@ -8,16 +8,31 @@ function eliminateQuotes( myStr : string){
     return myStr.replace( /"/g, '');
 }
 
-function getObjectContents(result : string, object : object){
+function getInlineStyleObjectContents(result : string, object : object){
     Object.keys(object).forEach(key => {
         if(typeof object[key].content !== "string"){
             result += camelCaseToDash(key) + ":"
-            result = getObjectContents(result, object[key].content);
+            result = getInlineStyleObjectContents(result, object[key].content);
         } else {
             result += camelCaseToDash(key) + ":" + eliminateQuotes(object[key].content) + "; "
         }
     });
     return result;
+}
+
+function getOuterStyleContents(className : string, object : object, result : string = "." + className + "{"){
+    Object.keys(object).forEach(key => {
+        if(key.match("@media")){
+            result += "}"
+        }
+        if(typeof object[key].content !== "string"){
+            result += camelCaseToDash(key) + "{" + "." + className + "{ " 
+            result = getOuterStyleContents(className, object[key].content, result);
+        } else {
+            result += camelCaseToDash(key) + ":" + eliminateQuotes(object[key].content) + "; "
+        }
+    });
+    return result + "}";
 }
 
 function getAttrContents(result : string, object : object){
@@ -28,9 +43,12 @@ function getAttrContents(result : string, object : object){
 }
 
 const UIDLToHtml = (UIDLArray:object[]) => {
+    let counter : number = 0;
     let stack:string[] = []
     let prevDepth:number = -1;
-    let result = UIDLArray.reduce((accumulator : string, entry:ParsedUIDLNode) => {
+    let styleResult : string = "";
+    let htmlResult : string = UIDLArray.reduce((accumulator : string, entry:ParsedUIDLNode) => {
+        counter += 1;
         if(typeof entry.elementInfo === "string"){
             return accumulator += entry.elementInfo
         }
@@ -54,13 +72,22 @@ const UIDLToHtml = (UIDLArray:object[]) => {
                 return
             }
 
-            accumulator += key + "=";
+            if(key === "style"){
+                if(typeof entry.elementInfo["name"] !== "undefined"){
+                    styleResult += getOuterStyleContents(entry.elementInfo["name"] + counter, entry.elementInfo[key]);
+                    return
+                }   
+            }
+
+            //name should be translated into class(?)
+            accumulator += key === "name"? "class=" : key + "="
+
             if(typeof entry.elementInfo[key] === "string"){
-                accumulator += entry.elementInfo[key] + " ";
+                accumulator += key==="name" ? entry.elementInfo[key] + counter + " " : entry.elementInfo[key] + " ";
                 return;
             }
             accumulator += '"';
-            accumulator = getObjectContents(accumulator, entry.elementInfo[key]);
+            accumulator = getInlineStyleObjectContents(accumulator, entry.elementInfo[key]);
             accumulator += '"';
         })
 
@@ -72,12 +99,10 @@ const UIDLToHtml = (UIDLArray:object[]) => {
         return accumulator
     }, "")
     while(stack.length > 0){
-        result += "</" + stack.pop() + ">";
+        htmlResult += "</" + stack.pop() + ">";
     }
-    console.log(result);
-    return result
+    return {html : htmlResult, style : styleResult}
 }
-//const test = flatten(myimport.node.content);
-// console.log(test);
-// console.log(UIDLToHtml(test));
+
+
 export default UIDLToHtml
