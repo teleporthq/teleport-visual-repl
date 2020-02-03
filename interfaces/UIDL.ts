@@ -30,4 +30,7 @@ export interface UIDLElementContent {
   events?: any;
   children?: UIDLNode[];
   dataSource?: object;
+  reference?: object;
+  value?: boolean | string;
+  test?: any;
 }
