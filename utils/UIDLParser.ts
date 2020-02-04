@@ -28,6 +28,16 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
       acc.push({ elementInfo: value, depthLevel });
 
       if (value.children) {
+        
+        //check if children is a string first
+        if(typeof value.children === "string"){
+          value.children = [{type: "static", content:value.children}]
+        }
+
+        //check if children is an array of strings
+        if(typeof value.children[0] === "string"){
+          value.children = [{type: "static", content:value.children[0]}]
+        }
         const newValues = value.children.map(child => {
           if (child.type === "conditional") {
             return UILDParser(child.content, depthLevel);
