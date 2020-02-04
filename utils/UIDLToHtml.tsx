@@ -1,57 +1,62 @@
 import { ParsedUIDLNode } from "../interfaces/ParsedUIDLNode";
 
 function camelCaseToDash( myStr : string ) {
-    return myStr.replace( /([a-z])([A-Z])/g, '$1-$2' ).toLowerCase();
+    return myStr.replace( /([a-z])([A-Z])/g, '$1-$2' ).toLowerCase().replace(/&/g, '');
 }
 
 function eliminateQuotes( myStr : string){
     return myStr.replace( /"/g, '');
 }
 
-function getInlineStyleObjectContents(result : string, object : object){
+function getStyleContents(className : string, object : unknown, result : string = "." + className + "{", end : boolean = true){
     Object.keys(object).forEach(key => {
-        if(typeof object[key].content !== "string"){
-            result += camelCaseToDash(key) + ":"
-            result = getInlineStyleObjectContents(result, object[key].content);
-        } else {
-            result += camelCaseToDash(key) + ":" + eliminateQuotes(object[key].content) + "; "
-        }
-    });
-    return result;
-}
-
-function getOuterStyleContents(className : string, object : object, result : string = "." + className + "{"){
-    Object.keys(object).forEach(key => {
+        
         if(key.match("@media")){
             result += "}"
         }
-        if(typeof object[key].content !== "string"){
-            result += camelCaseToDash(key) + "{" + "." + className + "{ " 
-            result = getOuterStyleContents(className, object[key].content, result);
+        if(key.match("&")){
+            result +=  "}." + className
+        }
+        if(typeof object[key] !== "string"){
+            if(typeof object[key].content !== "string"){
+                result += key.match("@media") ? 
+                    camelCaseToDash(key) + "{" + "." + className + "{ " :  
+                    camelCaseToDash(key) + "{"
+                result = key.match("&") ? 
+                    getStyleContents(className, object[key].content, result, false):
+                    getStyleContents(className, object[key].content, result)
+            } else {
+                result += camelCaseToDash(key) + ":" + eliminateQuotes(object[key].content) + "; "
+            }
         } else {
-            result += camelCaseToDash(key) + ":" + eliminateQuotes(object[key].content) + "; "
+            result += camelCaseToDash(key) + ":" + eliminateQuotes(object[key]) + "; "
         }
     });
-    return result + "}";
+    return end ? result + "} " : result
 }
 
-function getAttrContents(result : string, object : object){
+function getAttrContents(result : string, object : unknown){
     Object.keys(object).forEach(key => {
-        result += camelCaseToDash(key) + "=" + object[key].content + " "   
+        if(typeof object[key] !== "string"){
+            result += camelCaseToDash(key) + "=" + object[key].content + " "   
+        } else {
+            result += camelCaseToDash(key) + "=" + object[key] + " "   
+        }
     });
     return result;
 }
 
 const UIDLToHtml = (UIDLArray:object[]) => {
-    let counter : number = 0;
     let stack:string[] = []
     let prevDepth:number = -1;
     let styleResult : string = "";
+    const className : string = "class";
+    let counter = 0;
     let htmlResult : string = UIDLArray.reduce((accumulator : string, entry:ParsedUIDLNode) => {
+        counter += 1;
         if(entry.depthLevel === -1){
             return accumulator
         }
-        counter += 1;
         if(typeof entry.elementInfo === "string"){
             return accumulator += entry.elementInfo
         }
@@ -61,12 +66,10 @@ const UIDLToHtml = (UIDLArray:object[]) => {
             prevDepth -= 1;
             accumulator += "</" + stack.pop() + ">"
         }
-        accumulator += "<";
-
+        accumulator += "<" + entry.elementInfo["elementType"] + " ";
 
         Object.keys(entry.elementInfo).forEach(key =>{
             if(key === "elementType"){
-                accumulator += entry.elementInfo[key] + " "
                 return
             }
 
@@ -76,22 +79,17 @@ const UIDLToHtml = (UIDLArray:object[]) => {
             }
 
             if(key === "style"){
-                if(typeof entry.elementInfo["name"] !== "undefined"){
-                    styleResult += getOuterStyleContents(entry.elementInfo["name"] + counter, entry.elementInfo[key]);
-                    return
-                }   
+                accumulator += " class=" + className + counter + " ";
+                styleResult += getStyleContents(className + counter, entry.elementInfo[key]);
+                return   
             }
 
-            //name should be translated into class(?)
-            accumulator += key === "name"? "class=" : key + "="
+            accumulator += key + "="
 
             if(typeof entry.elementInfo[key] === "string"){
-                accumulator += key==="name" ? entry.elementInfo[key] + counter + " " : entry.elementInfo[key] + " ";
+                accumulator += entry.elementInfo[key] + " ";
                 return;
             }
-            accumulator += '"';
-            accumulator = getInlineStyleObjectContents(accumulator, entry.elementInfo[key]);
-            accumulator += '"';
         })
 
         accumulator += ">"
