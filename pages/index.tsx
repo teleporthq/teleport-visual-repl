@@ -1,32 +1,21 @@
 import { NextPage } from "next";
-import { useState, useEffect } from "react";
+import "../utils/UIDLToHtml";
+import UIDLToHtml from "../utils/UIDLToHtml";
 import UIDLParser from "../utils/UIDLParser";
-import input from "../utils/componentfile";
-import Landing from "../components/Landing";
-import FlipWraper from "../components/FlipWraper";
-import Head from "next/head";
+const myimport = require("../utils/componentfile");
 
-const Home: NextPage<{ userAgent: string; pageProps }> = ({ userAgent }) => {
-  const [ourInput, setOurInput] = useState([]);
-  const [showLanding, setShowLanding] = useState(true);
-  useEffect(() => {
-    setOurInput(UIDLParser(input.node.content));
-    setTimeout(() => {
-      setShowLanding(false);
-    }, 1500);
-  }, []);
-
-  console.log(ourInput);
+const Home: NextPage<{ userAgent: string }> = () => {
+  console.log(UIDLParser(JSON.parse(JSON.stringify(myimport.node.content))));
 
   return (
-    <div>
-      <Head>
-        <title>My styles pages</title>
-        <link href="/static/Landing.css" rel="stylesheet" />
-      </Head>
-      {showLanding?<Landing />:null}
-      <FlipWraper />
-    </div>
+    <div
+      style={{ height: "100vh", padding: "20%" }}
+      dangerouslySetInnerHTML={{
+        __html: UIDLToHtml(
+          UIDLParser(JSON.parse(JSON.stringify(myimport.node.content)))
+        )
+      }}
+    ></div>
   );
 };
 

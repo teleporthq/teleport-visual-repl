@@ -1,61 +1,53 @@
-import { UIDLNode } from "../interfaces/UIDL";
-const myimport = require("./componentfile");
+import { UIDLElementContent } from "../interfaces/UIDL";
 const htmlMap = require("../utils/html-mapping.json");
 
-// const getComponent = (tree: UIDLNode, depth: number = 0) => {
-//   const contents = tree.content;
-//   let list: any[] = [];
-//   if (!contents) {
-//     return [];
-//   }
-//   Object.keys(contents).forEach(key => {
-//     const elementType = contents[key];
-//     if (typeof elementType === "string") {
-//       if (key === "elementType") {
-//         let myResult = {
-//           elementType: htmlMap.elements[elementType]
-//             ? htmlMap.elements[elementType].elementType
-//             : elementType,
-//           depth: depth
-//         };
-//         list.push(myResult);
-//       } else {
-//         list.length ? (list[list.length - 1][key] = elementType) : null;
-//       }
-//     } else {
-//       if (key === "children") {
-//         elementType.forEach(
-//           (child: UIDLNode) =>
-//             (list = [...list, ...getComponent(child, depth + 1)])
-//         );
-//       } else {
-//         list[list.length - 1][key] = elementType;
-//       }
-//     }
-//   });
-//   return list;
-// };
+const UILDParser = (obj: UIDLElementContent, depthLevel: number = 0) => {
+  const array: UIDLElementContent[] = Array.isArray(obj) ? obj : [obj];
 
-const flatten = (obj, depthLevel = 0) => {
-  const array = Array.isArray(obj) ? obj : [obj];
-  return array.reduce((acc, value) => {
-    let myResult = htmlMap.elements[value.elementType]
-      ? htmlMap.elements[value.elementType].elementType
-      : value.elementType;
+  return array.reduce((acc: UIDLElementContent[], value) => {
+    if (value.node) {
+      const nestedNode = UILDParser(value.node.content, depthLevel + 1);
+      acc = acc.concat(...nestedNode);
+      delete value.node;
+    }
     if (value.elementType) {
-      value.elementType = myResult;
+      // PREVIOUS IMPLEMENTATION
+      // let myResult: string = htmlMap.elements[value.elementType]
+      //   ? htmlMap.elements[value.elementType].elementType
+      //   : value.elementType;
+      // value.elementType = myResult;
+
+      // OPTIONAL CHAINING
+      value.elementType =
+        htmlMap.elements[value.elementType]?.elementType || value.elementType;
     }
     acc.push({ elementInfo: value, depthLevel });
+
     if (value.children) {
-      value.children.map(
-        child => (acc = [...acc, ...flatten(child.content, depthLevel + 1)])
+      // value.children.forEach(
+      //   child => (acc = [...acc, ...UILDParser(child.content, depthLevel + 1)])
+      // );
+
+      const newValues = value.children.map(child =>
+        UILDParser(child.content, depthLevel + 1)
       );
+      acc = acc.concat(...newValues);
+
       delete value.children;
+    }
+
+    if (value.dataSource) {
+      const newD = value.dataSource.content
+      for (let [key, value] of Object.entries(newD)) {
+        console.log(`${key}: ${value}`)
+      }
+    
+      acc = acc.concat(...newD)
+      delete value.dataSource;
+
     }
     return acc;
   }, []);
 };
-console.log(flatten(myimport.node.content));
-// console.log("Result: ", getComponent(myimport.node));
 
-export default flatten;
+export default UILDParser;
