@@ -18,15 +18,19 @@ export interface UIDLElementNode {
 }
 
 export interface UIDLElementContent {
+  type?: string;
   node?: any;
   content?: string;
   elementType?: string;
   elementInfo?: object;
-  depthLevel: number;
+  depthLevel?: number;
   name?: string;
   style?: any;
   attrs?: any;
   events?: any;
   children?: UIDLNode[];
-  dataSource?: any;
+  dataSource?: object;
+  reference?: object;
+  value?: boolean | string;
+  filterCondition?: any;
 }

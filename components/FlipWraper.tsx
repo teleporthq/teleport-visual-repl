@@ -1,28 +1,26 @@
-import React, { useState } from 'react';
-import ReactCardFlip from 'react-card-flip';
-import UIDLtoHTMLComponent from '../components/UIDLtoHTMLComponent';
+import React, { useState } from "react";
+import ReactCardFlip from "react-card-flip";
+import UIDLtoHTMLComponent from "../components/UIDLtoHTMLComponent";
 import SplitEditor from "../components/SplitEditor";
 
-export default function App () {
-  const [isFlipped, setIsFlipped] = useState(false)
-
- const handleClick = () => setIsFlipped(!isFlipped)
-
- 
+export default function FlipWrapper() {
   
-    return (
-      <div>
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  const handleClick = () => setIsFlipped(!isFlipped);
+
+  return (
+    <div>
       <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
-        <SplitEditor>
+        <SplitEditor flip={handleClick}>
           This is the front of the card.
-          <button onClick={handleClick}>Click to flip</button>
+          
         </SplitEditor>
- 
-        <UIDLtoHTMLComponent>
+
+        <UIDLtoHTMLComponent flip={handleClick}>
           This is the back of the card.
-          <button onClick={handleClick}>Click to flip</button>
         </UIDLtoHTMLComponent>
       </ReactCardFlip>
-      </div>
-    )
-  }
+    </div>
+  );
+}
