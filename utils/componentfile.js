@@ -5,6 +5,16 @@ const myComponent = {
     isVisible: {
       type: "boolean",
       defaultValue: true
+    },
+    isAlive: {
+      type: "boolean",
+      defaultValue: true
+    }
+  },
+  propDefinitions: {
+    heading: {
+      type: "string",
+      defaultValue: "Hello ce urat e rezolvata dar macar merge "
     }
   },
   node: {
@@ -12,6 +22,25 @@ const myComponent = {
     content: {
       elementType: "div",
       children: [
+        {
+          type: "element",
+          content: {
+            elementType: "text",
+            children: [
+              {
+                type: "dynamic",
+                content: {
+                  referenceType: "prop",
+                  id: "heading"
+                }
+              },
+              {
+                type: "static",
+                content: "World!"
+              }
+            ]
+          }
+        },
         {
           type: "conditional",
           content: {
@@ -44,7 +73,7 @@ const myComponent = {
               type: "dynamic",
               content: {
                 referenceType: "state",
-                id: "isVisible"
+                id: "isAlive"
               }
             },
             value: true,
@@ -55,7 +84,7 @@ const myComponent = {
                 children: [
                   {
                     type: "static",
-                    content: "Now you see me!"
+                    content: "Now you don't!"
                   }
                 ]
               }
