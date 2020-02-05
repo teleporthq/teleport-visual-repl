@@ -5,22 +5,28 @@ import SplitEditor from "../components/SplitEditor";
 
 export default function FlipWrapper() {
   
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
+  const [uidl, setUidl] = useState("");
 
-  const handleClick = () => setIsFlipped(!isFlipped);
+  const handleClick = () => {
+    setIsHidden(!isHidden);
+    if(isHidden){
+      document.getElementById("hide").innerHTML = "<"
+    } else {
+      document.getElementById("hide").innerHTML = ">"
+    }
+  };
+  const onChange = () => {
+    
+  }
 
   return (
-    <div>
-      <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
-        <SplitEditor flip={handleClick}>
-          This is the front of the card.
-          
-        </SplitEditor>
-
-        <UIDLtoHTMLComponent flip={handleClick}>
-          This is the back of the card.
-        </UIDLtoHTMLComponent>
-      </ReactCardFlip>
+    <div style={{display:"flex", height: "100vh", width: "100vh"}}>
+      <SplitEditor onChange={onChange}>
+      </SplitEditor>
+      <button id="hide" onClick = {() => handleClick()}>></button>
+      <UIDLtoHTMLComponent>
+      </UIDLtoHTMLComponent>
     </div>
   );
 }

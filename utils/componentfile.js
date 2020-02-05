@@ -14,7 +14,7 @@ const myComponent = {
   propDefinitions: {
     heading: {
       type: "string",
-      defaultValue: "Hello ce urat e rezolvata dar macar merge "
+      defaultValue: "Hello , ce mai faci? "
     }
   },
   node: {
