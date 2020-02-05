@@ -16,17 +16,28 @@ export default function FlipWrapper() {
       document.getElementById("hide").innerHTML = ">"
     }
   };
-  const onChange = (newValue) => {
+
+  const handleChange = (newValue) => {
     setUidl(newValue);
   }
 
   return (
-    <div style={{display:"flex", height: "100vh", width: "100vh"}}>
-      <SplitEditor onChange={onChange} uidl={uidl}>
-      </SplitEditor>
-      <button id="hide" onClick = {() => handleClick()}>></button>
-      <UIDLtoHTMLComponent uidl={uidl}>
-      </UIDLtoHTMLComponent>
+    <div className="mainContainer">
+      <SplitEditor onChange={handleChange} uidl={uidl} isHidden={isHidden} />
+      <button className="hideButton" id="hide" onClick = {() => handleClick()}>&lt;</button>
+      <UIDLtoHTMLComponent uidl={uidl} />
+      <style jsx>{`
+        .mainContainer {
+          display: flex;
+          height: 100vh;
+          width: 100vw;
+          align-items:stretch
+        }
+
+        .hideButton {
+          width: 2%;
+        }
+        `}</style>
     </div>
   );
 }

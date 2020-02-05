@@ -28,28 +28,31 @@ export default function UIDLtoHTMLComponent(props): any {
   }, [props])
 
   return (
-    <div>
+    <div className="container">
 
-      <div className="container" >
-        <div id="htmlContainer" className="wraper"></div>
+      <div className="htmlWrapper" >
+        <div id="htmlContainer" className="htmlContainer"></div>
       </div>
 
       
         <style jsx>{`
-          .wraper {
+          .htmlContainer {
             position: relative;
             height: 100%;
             width: 100%;
             margin: auto;
             background-color: white;
           }
-          .container {
+          .htmlWrapper {
             position: relative;
-            margin-top: 1%;
             height: 100%;
             width: 100%;
             border-radius: 6px;
             background: #0b032d;
+          }
+          .container {
+            height: 100%;
+            width: 100%;
           }
           .buton{
             position: relative;

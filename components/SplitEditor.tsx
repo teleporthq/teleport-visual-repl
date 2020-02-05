@@ -3,15 +3,16 @@ import dynamic from "next/dynamic";
 
 const CodeEditor = dynamic(import("./AceEditor"), { ssr: false });
 
-const SplitEditor = (props) => {
+const SplitEditor = ({isHidden,onChange,uidl}) => {
   return (
-    <div>
-      <div className="container">
+    isHidden? <div></div> :
+    <div className="container">
+      <div className="editorContainer">
         <div className="wraper" id="TEST">
           <CodeEditor
             mode={"json"}
-            value={props.uidl}
-            onChange={(newValue) => props.onChange(newValue)}
+            value={uidl}
+            onChange={(newValue) => onChange(newValue)}
           />
         </div>
       </div>
@@ -23,12 +24,16 @@ const SplitEditor = (props) => {
           width: 100%;
           margin: auto;
         }
+        .editorContainer{
+          position: relative;
+          height: 100%;
+          width: 100%;
+          border-radius: 6px;
+        }
         .container {
           position: relative;
-          margin-top: 1%;
           height: 100%;
-          width: 40%;
-          min-width: 550px;
+          min-width: 30%;
           border-radius: 6px;
           background: #0b032d;
         }
