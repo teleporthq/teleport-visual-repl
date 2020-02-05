@@ -1,15 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import UIDLToHtml from "../utils/UIDLToHtml";
 import UIDLParser from "../utils/UIDLParser";
-import Interweave from "interweave"
-import { polyfillDOMImplementation } from 'interweave-ssr';
-
-//for server-side rendering part, required by interweave library (lightweight)
-polyfillDOMImplementation();
 
 export default function UIDLtoHTMLComponent(props): any {
-  
-  const [html, setHtml] = useState("");
 
   useEffect(() => {
     let UIDLObject: unknown;
@@ -21,7 +14,7 @@ export default function UIDLtoHTMLComponent(props): any {
     
     const {html, style} = UIDLToHtml(UIDLParser(JSON.parse(JSON.stringify(UIDLObject))));
     
-    setHtml(html)
+    document.getElementById("htmlContainer").innerHTML = html;
 
     if (document.getElementById("generatedElementStyle")) {
       document.getElementById("generatedElementStyle").innerHTML = style;
@@ -40,7 +33,7 @@ export default function UIDLtoHTMLComponent(props): any {
     <div className="container">
 
       <div className="htmlWrapper" >
-        <div id="htmlContainer" className="htmlContainer"><Interweave content={html}/></div>
+        <div id="htmlContainer" className="htmlContainer"></div>
       </div>
 
       <style jsx>{`
