@@ -3,7 +3,6 @@ import UIDLtoHTMLComponent from "../components/UIDLtoHTMLComponent";
 import SplitEditor from "../components/SplitEditor";
 
 export default function FlipWrapper() {
-  
   const [isHidden, setIsHidden] = useState(false);
   const [uidl, setUidl] = useState("");
 
@@ -11,10 +10,9 @@ export default function FlipWrapper() {
     setIsHidden(!isHidden);
   };
 
-  const handleChange = (newValue) => {
+  const handleChange = newValue => {
     setUidl(newValue);
-  }
-
+  };
   return (
     <div className="mainContainer">
       <SplitEditor onChange={handleChange} uidl={uidl} isHidden={isHidden} />
@@ -31,7 +29,7 @@ export default function FlipWrapper() {
           postion: relative;
           width: 2%;
         }
-        `}</style>
+      `}</style>
     </div>
   );
 }

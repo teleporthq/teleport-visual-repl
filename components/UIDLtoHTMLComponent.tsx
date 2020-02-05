@@ -12,11 +12,11 @@ export default function UIDLtoHTMLComponent(props): any {
   const [html, setHtml] = useState("");
 
   useEffect(() => {
-    let UIDLObject : unknown
-    try{
-      UIDLObject = JSON.parse(props.uidl)
+    let UIDLObject: unknown;
+    try {
+      UIDLObject = JSON.parse(props.uidl);
     } catch (e) {
-      UIDLObject = ""
+      UIDLObject = "";
     }
     
     const {html, style} = UIDLToHtml(UIDLParser(JSON.parse(JSON.stringify(UIDLObject))));
@@ -60,7 +60,6 @@ export default function UIDLtoHTMLComponent(props): any {
           width: 100%;
         }
       `}</style>
-
     </div>
   );
 }

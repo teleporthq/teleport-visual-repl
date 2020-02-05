@@ -3,16 +3,17 @@ import dynamic from "next/dynamic";
 
 const CodeEditor = dynamic(import("./AceEditor"), { ssr: false });
 
-const SplitEditor = ({isHidden,onChange,uidl}) => {
-  return (
-    isHidden? <div></div> :
+const SplitEditor = ({ isHidden, onChange, uidl }) => {
+  return isHidden ? (
+    <div></div>
+  ) : (
     <div className="container">
       <div className="editorContainer">
         <div className="wrapper" id="TEST">
           <CodeEditor
             mode={"json"}
             value={uidl}
-            onChange={(newValue) => onChange(newValue)}
+            onChange={newValue => onChange(newValue)}
           />
         </div>
       </div>
@@ -24,7 +25,7 @@ const SplitEditor = ({isHidden,onChange,uidl}) => {
           width: 100%;
           margin: auto;
         }
-        .editorContainer{
+        .editorContainer {
           position: relative;
           height: 100%;
           width: 100%;
