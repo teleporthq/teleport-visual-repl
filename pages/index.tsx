@@ -3,6 +3,7 @@ import "../utils/UIDLToHtml";
 import UIDLToHtml from "../utils/UIDLToHtml";
 import UIDLParser from "../utils/UIDLParser";
 import { useEffect, useState } from "react";
+import FlipWrapper from "../components/FlipWraper";
 const myimport = require("../utils/componentfile");
 
 const Home: NextPage<{ userAgent: string }> = () => {
@@ -25,6 +26,9 @@ const Home: NextPage<{ userAgent: string }> = () => {
   }, [parsedUIDL]);
 
   return (
+    // <div>
+    //   <FlipWrapper></FlipWrapper>
+    // </div>
     <div
       dangerouslySetInnerHTML={{
         __html: parsedUIDL.html
