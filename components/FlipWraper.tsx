@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ReactCardFlip from "react-card-flip";
 import UIDLtoHTMLComponent from "../components/UIDLtoHTMLComponent";
 import SplitEditor from "../components/SplitEditor";
 
@@ -10,11 +9,6 @@ export default function FlipWrapper() {
 
   const handleClick = () => {
     setIsHidden(!isHidden);
-    if(isHidden){
-      document.getElementById("hide").innerHTML = "<"
-    } else {
-      document.getElementById("hide").innerHTML = ">"
-    }
   };
 
   const handleChange = (newValue) => {
@@ -24,17 +18,17 @@ export default function FlipWrapper() {
   return (
     <div className="mainContainer">
       <SplitEditor onChange={handleChange} uidl={uidl} isHidden={isHidden} />
-      <button className="hideButton" id="hide" onClick = {() => handleClick()}>&lt;</button>
+      <button className="hideButton" id="hide" onClick = {() => handleClick()}>{isHidden ? <span>></span> : <span>&lt;</span>}</button>
       <UIDLtoHTMLComponent uidl={uidl} />
       <style jsx>{`
         .mainContainer {
           display: flex;
           height: 100vh;
           width: 100vw;
-          align-items:stretch
         }
 
         .hideButton {
+          postion: relative;
           width: 2%;
         }
         `}</style>

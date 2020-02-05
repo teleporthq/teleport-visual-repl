@@ -8,7 +8,7 @@ const SplitEditor = ({isHidden,onChange,uidl}) => {
     isHidden? <div></div> :
     <div className="container">
       <div className="editorContainer">
-        <div className="wraper" id="TEST">
+        <div className="wrapper" id="TEST">
           <CodeEditor
             mode={"json"}
             value={uidl}
@@ -18,7 +18,7 @@ const SplitEditor = ({isHidden,onChange,uidl}) => {
       </div>
 
       <style jsx>{`
-        .wraper {
+        .wrapper {
           position: relative;
           height: 100%;
           width: 100%;
@@ -28,42 +28,11 @@ const SplitEditor = ({isHidden,onChange,uidl}) => {
           position: relative;
           height: 100%;
           width: 100%;
-          border-radius: 6px;
         }
         .container {
           position: relative;
           height: 100%;
-          min-width: 30%;
-          border-radius: 6px;
-          background: #0b032d;
-        }
-        .buton {
-          position: relative;
-          display: block;
-          margin: 5% auto 0;
-          padding: 14px 15px;
-          color: #fff;
-          font-size: 14px;
-          font-weight: bold;
-          text-align: center;
-          text-decoration: none;
-          text-transform: uppercase;
-          overflow: hidden;
-          letter-spacing: 0.08em;
-          border-radius: 0;
-          text-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(0, 0, 0, 0.2);
-          transition: all 1s ease;
-          border: 2px solid #d24d57;
-        }
-
-        .buton:hover {
-          background: #d24d57;
-          transform: translateX(-5%) translateY(-5%) rotate(-5deg);
-        }
-
-        .buton {
-          color: #0b032d;
-          cursor: pointer;
+          min-width: 48%;
         }
       `}</style>
     </div>
