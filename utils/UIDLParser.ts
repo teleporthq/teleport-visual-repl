@@ -9,10 +9,9 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
   return array.reduce(
     (acc: UIDLElementContent[], value: UIDLElementContent) => {
       if (value.reference && !value.value) {
-        // value.filterCondition = "filter";
-        // delete value.node;
-        // delete value.reference;
-        console.log(value);
+        value.filterCondition = "filter";
+        delete value.node;
+        delete value.reference;
       }
       if (value.node) {
         if (depthLevel !== -1) {
@@ -77,7 +76,7 @@ const fixSpecialCases = (
     element => element.elementInfo["filterCondition"] !== "filter"
   );
   // Treat DefaultProps Case
-  if (props) {
+  if (props && Object.keys(props).length) {
     const consideringProps = filteredResult.map(element => {
       if (element.elementInfo["id"] === Object.keys(props)[0]) {
         return (element = {
