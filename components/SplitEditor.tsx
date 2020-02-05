@@ -5,8 +5,9 @@ const CodeEditor = dynamic(import("./AceEditor"), { ssr: false });
 
 const SplitEditor = (props) => {
   return (
-    <div>
-      <div className="container">
+    props.isHidden? <div></div> :
+    <div className="container">
+      <div className="editorContainer">
         <div className="wraper" id="TEST">
           <CodeEditor
             mode={"json"}
@@ -23,12 +24,16 @@ const SplitEditor = (props) => {
           width: 100%;
           margin: auto;
         }
+        .editorContainer{
+          position: relative;
+          height: 100%;
+          width: 100%;
+          border-radius: 6px;
+        }
         .container {
           position: relative;
-          margin-top: 1%;
           height: 100%;
-          width: 40%;
-          min-width: 550px;
+          min-width: 30%;
           border-radius: 6px;
           background: #0b032d;
         }

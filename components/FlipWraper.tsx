@@ -21,12 +21,24 @@ export default function FlipWrapper() {
   }
 
   return (
-    <div style={{display:"flex", height: "100vh", width: "100vh"}}>
-      <SplitEditor onChange={onChange} uidl={uidl}>
+    <div className="mainContainer">
+      <SplitEditor onChange={onChange} uidl={uidl} isHidden={isHidden}>
       </SplitEditor>
-      <button id="hide" onClick = {() => handleClick()}>></button>
+      <button className="hideButton" id="hide" onClick = {() => handleClick()}>&lt;</button>
       <UIDLtoHTMLComponent uidl={uidl}>
       </UIDLtoHTMLComponent>
+      <style jsx>{`
+        .mainContainer {
+          display: flex;
+          height: 100vh;
+          width: 100vw;
+          align-items:stretch
+        }
+
+        .hideButton {
+          width: 2%;
+        }
+        `}</style>
     </div>
   );
 }
