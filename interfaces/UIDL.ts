@@ -20,9 +20,11 @@ export interface UIDLElementNode {
 export interface UIDLElementContent {
   type?: string;
   node?: any;
+  propDefinitions?: object;
+  stateDefinitions?: object;
   content?: string;
   elementType?: string;
-  elementInfo?: object;
+  elementInfo?: object | string;
   depthLevel?: number;
   name?: string;
   style?: any;
