@@ -37,15 +37,19 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
       acc.push({ elementInfo: value, depthLevel });
 
       if (value.children) {
-        
         //check if children is a string first
-        if(typeof value.children === "string"){
-          value.children = [{type: "static", content:value.children}]
+        if (typeof value.children === "string") {
+          value.children = [{ type: "static", content: value.children }];
         }
-
         //check if children is an array of strings
-        if(typeof value.children[0] === "string"){
-          value.children = [{type: "static", content:value.children[0]}]
+        if (typeof value.children[0] === "string") {
+          let test = value.children.map((child, i) => {
+            return { type: "static", content: child };
+          });
+          console.log("From map: ", test);
+
+          value.children = test;
+          console.log("Original", value.children);
         }
         const newValues = value.children.map(child => {
           if (child.type === "conditional") {
@@ -59,6 +63,7 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
 
         delete value.children;
       }
+      console.log(acc);
 
       return fixSpecialCases(acc, defaultState, defaultProps);
     },
@@ -77,7 +82,7 @@ const fixSpecialCases = (
   );
   // Treat DefaultProps Case
   if (props && Object.keys(props).length) {
-    const consideringProps = filteredResult.map(element => {
+    const consideringProps = filteredResult.map((element, i) => {
       if (element.elementInfo["id"] === Object.keys(props)[0]) {
         return (element = {
           elementInfo: props[Object.keys(props)[0]].defaultValue,
@@ -89,6 +94,7 @@ const fixSpecialCases = (
     });
     return consideringProps;
   }
+  console.log(filteredResult);
 
   return filteredResult;
 };
