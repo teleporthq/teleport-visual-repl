@@ -10,8 +10,8 @@ const SplitEditor = (props) => {
         <div className="wraper" id="TEST">
           <CodeEditor
             mode={"json"}
-            value=""
-            onChange={() => props.onChange()}
+            value={props.uidl}
+            onChange={(newValue) => props.onChange(newValue)}
           />
         </div>
       </div>

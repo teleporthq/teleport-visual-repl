@@ -24,7 +24,6 @@ class CodeEditor extends React.Component<EditorProps, {}> {
 
   public onChange = (newValue: string) => {
     this.props.onChange(newValue);
-    console.log("I CHANGED", newValue);
   };
 
   public render() {

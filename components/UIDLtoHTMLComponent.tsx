@@ -1,21 +1,37 @@
 import React, { useEffect } from "react";
 import UIDLToHtml from "../utils/UIDLToHtml";
 import UIDLParser from "../utils/UIDLParser";
-const myimport = require("../utils/componentfile");
-
+const myimport = require("../utils/componentfile")
 export default function UIDLtoHTMLComponent(props): any {
   
 
   useEffect(() => {
-    console.log(props)
-    document.getElementById("qeke").innerHTML = UIDLToHtml(UIDLParser(JSON.parse(JSON.stringify(myimport)))).html
-  }, [])
+    console.log(typeof props.uidl)
+    console.log(typeof myimport)
+    let UIDLObject : unknown
+    try{
+      UIDLObject = JSON.parse(props.uidl)
+    } catch {
+      UIDLObject = ""
+    }
+    const {html, style} = UIDLToHtml(UIDLParser(UIDLObject));
+    console.log(html);
+    document.getElementById("htmlContainer").innerHTML = html
+    if (document.getElementById("generatedElementStyle")) {
+      document.getElementById("generatedElementStyle").innerHTML = style;
+      return;
+    }
+    let sheet: HTMLStyleElement = document.createElement("style");
+    sheet.innerHTML = style;
+    sheet.id = "generatedElementStyle";
+    document.body.appendChild(sheet);
+  }, [props])
 
   return (
     <div>
 
       <div className="container" >
-        <div id="qeke" className="wraper"></div>
+        <div id="htmlContainer" className="wraper"></div>
       </div>
 
       
