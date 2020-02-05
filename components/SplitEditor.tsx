@@ -1,41 +1,34 @@
 import React from "react";
-import UIDLParser from "../utils/UIDLParser";
-import UIDLToHtml from "../utils/UIDLToHtml"
 import dynamic from "next/dynamic";
 
 const CodeEditor = dynamic(import("./AceEditor"), { ssr: false });
 
-const SplitEditor = props => {
+const SplitEditor = (props) => {
   return (
     <div>
       <div className="container">
-        <p> SplitEditor </p>
         <div className="wraper" id="TEST">
           <CodeEditor
             mode={"json"}
             value=""
-            onChange={() => console.log("ceva")}
+            onChange={() => props.onChange()}
           />
         </div>
-        <button className="buton" onClick={props.flip}>
-          Click to flip - FRONT
-        </button>
       </div>
 
       <style jsx>{`
         .wraper {
           position: relative;
-          height: 80%;
-          width: 80%;
+          height: 100%;
+          width: 100%;
           margin: auto;
-          background-color: red;
         }
         .container {
           position: relative;
           margin-top: 1%;
-          left: 25%;
-          height: 850px;
-          width: 850px;
+          height: 100%;
+          width: 40%;
+          min-width: 550px;
           border-radius: 6px;
           background: #0b032d;
         }

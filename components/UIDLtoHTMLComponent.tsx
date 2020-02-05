@@ -1,34 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import UIDLToHtml from "../utils/UIDLToHtml";
+import UIDLParser from "../utils/UIDLParser";
+const myimport = require("../utils/componentfile");
 
 export default function UIDLtoHTMLComponent(props): any {
-  console.log("change", props.flip);
+  
+
+  useEffect(() => {
+    console.log(props)
+    document.getElementById("qeke").innerHTML = UIDLToHtml(UIDLParser(JSON.parse(JSON.stringify(myimport)))).html
+  }, [])
+
   return (
     <div>
 
-      <div className="container">
-        <p>UIDLToHtml</p>
-        <div className="wraper">
-
-        </div>
-        <button className="buton" onClick={props.flip}>Click to flip - BACK</button>
+      <div className="container" >
+        <div id="qeke" className="wraper"></div>
       </div>
 
       
         <style jsx>{`
-            .wraper {
+          .wraper {
             position: relative;
-            height: 80%;
-            width: 80%;
+            height: 100%;
+            width: 100%;
             margin: auto;
-            background-color: red;
+            background-color: white;
           }
           .container {
             position: relative;
             margin-top: 1%;
-            left: 25%;
-            height: 850px;
-            width: 850px;
+            height: 100%;
+            width: 100%;
             border-radius: 6px;
             background: #0b032d;
           }
