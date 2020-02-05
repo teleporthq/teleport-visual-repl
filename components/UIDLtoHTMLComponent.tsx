@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import UIDLToHtml from "../utils/UIDLToHtml";
 import UIDLParser from "../utils/UIDLParser";
+
 export default function UIDLtoHTMLComponent(props): any {
   useEffect(() => {
     let UIDLObject: unknown;
