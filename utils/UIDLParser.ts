@@ -46,10 +46,8 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
           let test = value.children.map((child, i) => {
             return { type: "static", content: child };
           });
-          console.log("From map: ", test);
 
           value.children = test;
-          console.log("Original", value.children);
         }
         const newValues = value.children.map(child => {
           if (child.type === "conditional") {
@@ -63,8 +61,6 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
 
         delete value.children;
       }
-      console.log(acc);
-
       return fixSpecialCases(acc, defaultState, defaultProps);
     },
     []
@@ -83,9 +79,12 @@ const fixSpecialCases = (
   // Treat DefaultProps Case
   if (props && Object.keys(props).length) {
     const consideringProps = filteredResult.map((element, i) => {
-      if (element.elementInfo["id"] === Object.keys(props)[0]) {
+      let myFind = Object.keys(props).find(
+        prop => prop === element.elementInfo["id"]
+      );
+      if (myFind) {
         return (element = {
-          elementInfo: props[Object.keys(props)[0]].defaultValue,
+          elementInfo: props[myFind].defaultValue,
           depthLevel: element.depthLevel
         });
       } else {
@@ -94,8 +93,6 @@ const fixSpecialCases = (
     });
     return consideringProps;
   }
-  console.log(filteredResult);
-
   return filteredResult;
 };
 
