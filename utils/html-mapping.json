@@ -62,6 +62,7 @@
     },
     "image": {
       "elementType": "img",
+      "url" : "src",
       "attrs": {
         "src": {
           "type": "dynamic",

@@ -30,11 +30,28 @@ function getStyleContents(className : string, object : unknown, result : string 
     });
     return end ? result + "} " : result
 }
-function getAttrContents(result : string, object : unknown){
+function getAttrContents(result : string, object : unknown, stateAndProps : object, currentElement : string){
     Object.keys(object).forEach(key => {
+        let printedKey : string;
+        if(currentElement === "img"){
+            printedKey = "src";
+        } else if (currentElement === "a"){
+            printedKey = "href";
+        } else {
+            printedKey = key;
+        }
         if(typeof object[key] !== "string"){
+            if(object[key].content.referenceType){
+                result += camelCaseToDash(printedKey) + "=" + stateAndProps["propDefinitions"][object[key].content.id].defaultValue  + " "
+                return result;
+            }
             result += camelCaseToDash(key) + "=" + object[key].content + " "
         } else {
+            if(/\$/.test(object[key])){
+                const parts = object[key].split(".");
+                result += camelCaseToDash(printedKey) + "=" + stateAndProps["propDefinitions"][parts[1]].defaultValue + " "
+                return result;
+            }
             result += camelCaseToDash(key) + "=" + object[key] + " "
         }
     });
@@ -45,12 +62,14 @@ const UIDLToHtml = (UIDLArray:object[]) => {
     let prevDepth:number = -1;
     let styleResult : string = "";
     const className : string = "class";
+    const stateAndProps = UIDLArray[UIDLArray.length - 1]["elementInfo"];
     let counter = 0;
     let htmlResult : string = UIDLArray.reduce((accumulator : string, entry:ParsedUIDLNode) => {
         counter += 1;
+        const elementType : string = /[A-Z]/.test(entry.elementInfo["elementType"]) ? "div" : entry.elementInfo["elementType"]
         if(entry.depthLevel === -1){
             return accumulator
-        }
+        }``
         if(typeof entry.elementInfo === "string"){
             return accumulator += entry.elementInfo
         }
@@ -59,13 +78,14 @@ const UIDLToHtml = (UIDLArray:object[]) => {
             prevDepth -= 1;
             accumulator += "</" + stack.pop() + ">"
         }
-        accumulator += "<" + entry.elementInfo["elementType"] + " ";
+        accumulator += "<" + elementType + " ";
+        stack.push(elementType)
         Object.keys(entry.elementInfo).forEach(key =>{
             if(key === "elementType"){
                 return
             }
             if(key === "attrs"){
-                accumulator = getAttrContents(accumulator, entry.elementInfo[key]);
+                accumulator = getAttrContents(accumulator, entry.elementInfo[key], stateAndProps, stack[stack.length - 1]);
                 return
             }
             if(key === "style"){
@@ -80,7 +100,6 @@ const UIDLToHtml = (UIDLArray:object[]) => {
             }
         })
         accumulator += ">"
-        stack.push(entry.elementInfo["elementType"])
         prevDepth = entry.depthLevel
         return accumulator
     }, "")
