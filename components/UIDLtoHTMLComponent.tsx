@@ -3,7 +3,6 @@ import UIDLToHtml from "../utils/UIDLToHtml";
 import UIDLParser from "../utils/UIDLParser";
 
 export default function UIDLtoHTMLComponent(props): any {
-
   useEffect(() => {
     let UIDLObject: unknown;
     try {
@@ -11,9 +10,10 @@ export default function UIDLtoHTMLComponent(props): any {
     } catch (e) {
       UIDLObject = "";
     }
-    console.log(UIDLParser(JSON.parse(JSON.stringify(UIDLObject))))
-    const {html, style} = UIDLToHtml(UIDLParser(JSON.parse(JSON.stringify(UIDLObject))));
-    
+    console.log(UIDLParser(JSON.parse(JSON.stringify(UIDLObject))));
+    const { html, style } = UIDLToHtml(
+      UIDLParser(JSON.parse(JSON.stringify(UIDLObject)))
+    );
     document.getElementById("htmlContainer").innerHTML = html;
 
     if (document.getElementById("generatedElementStyle")) {
@@ -25,14 +25,11 @@ export default function UIDLtoHTMLComponent(props): any {
     sheet.innerHTML = style;
     sheet.id = "generatedElementStyle";
     document.body.appendChild(sheet);
-
-    //maybe refactor here to use refs to watch props instea (?)
-  }, [props])
+  }, [props]);
 
   return (
     <div className="container">
-
-      <div className="htmlWrapper" >
+      <div className="htmlWrapper">
         <div id="htmlContainer" className="htmlContainer"></div>
       </div>
 

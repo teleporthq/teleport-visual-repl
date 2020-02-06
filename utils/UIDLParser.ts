@@ -43,8 +43,18 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
         }
         //check if children is an array of strings
         if (typeof value.children[0] === "string") {
-          let test = value.children.map((child, i) => {
-            return { type: "static", content: child };
+          let test = value.children.map((child: any, i) => {
+            // treated dynamic children if it's a prop
+            if (child.includes("$")) {
+              let neededValue = child.split(".");
+              neededValue[0] = neededValue[0].replace(/\$/g, "");
+              return {
+                type: "dynamic",
+                content: { referenceType: neededValue[0], id: neededValue[1] }
+              };
+            } else {
+              return { type: "static", content: child };
+            }
           });
 
           value.children = test;
@@ -78,13 +88,27 @@ const fixSpecialCases = (
   );
   // Treat DefaultProps Case
   if (props && Object.keys(props).length) {
+    console.log("PROPS: ", props);
     const consideringProps = filteredResult.map((element, i) => {
-      let myFind = Object.keys(props).find(
+      let myFindById = Object.keys(props).find(
         prop => prop === element.elementInfo["id"]
       );
-      if (myFind) {
+
+      if (element.elementInfo["attrs"]) {
+        let myFindByAttr = Object.keys(props).find(
+          prop => prop === element.elementInfo["attrs"]
+        );
+        console.log(element.elementInfo["attrs"]);
+        console.log(myFindByAttr);
+        // console.log(element);
+        // element.elementInfo["attrs"][props[i]];
+      }
+      // console.log("Element: ", element.elementInfo);
+      // console.log("*****************BREAK************************");
+
+      if (myFindById) {
         return (element = {
-          elementInfo: props[myFind].defaultValue,
+          elementInfo: props[myFindById].defaultValue,
           depthLevel: element.depthLevel
         });
       } else {
