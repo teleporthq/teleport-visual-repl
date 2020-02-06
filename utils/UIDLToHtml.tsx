@@ -42,14 +42,22 @@ function getAttrContents(result : string, object : unknown, stateAndProps : obje
         }
         if(typeof object[key] !== "string"){
             if(object[key].content.referenceType){
-                result += camelCaseToDash(printedKey) + "=" + stateAndProps["propDefinitions"][object[key].content.id].defaultValue  + " "
+                if(object[key].content.referenceType === "prop" || object[key].content.referenceType === "props"){
+                    result += camelCaseToDash(printedKey) + "=" + stateAndProps["propDefinitions"][object[key].content.id].defaultValue  + " "
+                } else {
+                    result += camelCaseToDash(printedKey) + "=" + stateAndProps["stateDefinitons"][object[key].content.id].defaultValue  + " "
+                }
                 return result;
             }
             result += camelCaseToDash(key) + "=" + object[key].content + " "
         } else {
             if(/\$/.test(object[key])){
                 const parts = object[key].split(".");
-                result += camelCaseToDash(printedKey) + "=" + stateAndProps["propDefinitions"][parts[1]].defaultValue + " "
+                if(parts[0] === "$props" || parts[0] === "$prop"){
+                    result += camelCaseToDash(printedKey) + "=" + stateAndProps["propDefinitions"][parts[1]].defaultValue + " "
+                } else {
+                    result += camelCaseToDash(printedKey) + "=" + stateAndProps["stateDefinitions"][parts[1]].defaultValue + " "
+                }
                 return result;
             }
             result += camelCaseToDash(key) + "=" + object[key] + " "
