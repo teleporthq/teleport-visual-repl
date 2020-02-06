@@ -2,8 +2,8 @@ import { UIDLElementContent } from "../interfaces/UIDL";
 const htmlMap = require("../utils/html-mapping.json");
 
 const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
-  let defaultState;
-  let defaultProps;
+  let defaultState: object;
+  let defaultProps: object;
   const array: UIDLElementContent[] = Array.isArray(obj) ? obj : [obj];
 
   return array.reduce(
@@ -28,10 +28,14 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
         acc = acc.concat(...nestedNode);
         delete value.node;
       }
-
+      // check and map to htmlMap
       if (value.elementType) {
         value.elementType =
           htmlMap.elements[value.elementType]?.elementType || value.elementType;
+      }
+      // if value.elementType starts with a capital letter, then it's a custom component. default to div
+      if (value.elementType && /[A-Z]/g.test(value.elementType)) {
+        value.elementType = "div";
       }
 
       acc.push({ elementInfo: value, depthLevel });
@@ -63,7 +67,12 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
           if (child.type === "conditional") {
             return UILDParser(child.content, depthLevel);
           }
-          if (child.type === "dynamic") {
+          if (child.type === "repeat") {
+            Array.from(child.content.dataSource.content).forEach(content => {
+              console.log(content);
+            });
+
+            return UILDParser(child.content, depthLevel);
           }
           return UILDParser(child.content, depthLevel + 1);
         });
@@ -88,24 +97,10 @@ const fixSpecialCases = (
   );
   // Treat DefaultProps Case
   if (props && Object.keys(props).length) {
-    console.log("PROPS: ", props);
     const consideringProps = filteredResult.map((element, i) => {
       let myFindById = Object.keys(props).find(
         prop => prop === element.elementInfo["id"]
       );
-
-      if (element.elementInfo["attrs"]) {
-        let myFindByAttr = Object.keys(props).find(
-          prop => prop === element.elementInfo["attrs"]
-        );
-        console.log(element.elementInfo["attrs"]);
-        console.log(myFindByAttr);
-        // console.log(element);
-        // element.elementInfo["attrs"][props[i]];
-      }
-      // console.log("Element: ", element.elementInfo);
-      // console.log("*****************BREAK************************");
-
       if (myFindById) {
         return (element = {
           elementInfo: props[myFindById].defaultValue,
