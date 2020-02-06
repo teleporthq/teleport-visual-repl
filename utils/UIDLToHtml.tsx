@@ -37,6 +37,8 @@ function getAttrContents(result : string, object : unknown, stateAndProps : obje
             printedKey = "src";
         } else if (currentElement === "a"){
             printedKey = "href";
+        } else {
+            printedKey = key;
         }
         if(typeof object[key] !== "string"){
             if(object[key].content.referenceType){

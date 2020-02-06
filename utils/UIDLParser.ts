@@ -88,7 +88,6 @@ const fixSpecialCases = (
   );
   // Treat DefaultProps Case
   if (props && Object.keys(props).length) {
-    console.log("PROPS: ", props);
     const consideringProps = filteredResult.map((element, i) => {
       let myFindById = Object.keys(props).find(
         prop => prop === element.elementInfo["id"]
