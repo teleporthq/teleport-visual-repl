@@ -71,12 +71,13 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
 
         delete value.children;
       }
-      return fixSpecialCases(acc, defaultState, defaultProps);
+      return acc;
     },
     []
   );
 };
 
+// delete?
 const fixSpecialCases = (
   result: UIDLElementContent[],
   state,
@@ -97,8 +98,6 @@ const fixSpecialCases = (
         let myFindByAttr = Object.keys(props).find(
           prop => prop === element.elementInfo["attrs"]
         );
-        console.log(element.elementInfo["attrs"]);
-        console.log(myFindByAttr);
         // console.log(element);
         // element.elementInfo["attrs"][props[i]];
       }

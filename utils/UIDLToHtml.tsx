@@ -1,4 +1,5 @@
 import { ParsedUIDLNode } from "../interfaces/ParsedUIDLNode";
+
 function camelCaseToDash( myStr : string ) {
     return myStr.replace( /([a-z])([A-Z])/g, '$1-$2' ).toLowerCase().replace(/&/g, '');
 }
@@ -30,47 +31,31 @@ function getStyleContents(className : string, object : unknown, result : string 
     });
     return end ? result + "} " : result
 }
-function getAttrContents(result : string, object : unknown, stateAndProps : object, currentElement : string){
+
+function getAttrContents(result : string, object : unknown, currentElement : string){
     Object.keys(object).forEach(key => {
         let printedKey : string;
-        if(currentElement === "img"){
+        if(currentElement === "img" && key === "url"){
             printedKey = "src";
-        } else if (currentElement === "a"){
+        } else if (currentElement === "a" && key ==="url"){
             printedKey = "href";
         } else {
             printedKey = key;
         }
         if(typeof object[key] !== "string"){
-            if(object[key].content.referenceType){
-                if(object[key].content.referenceType === "prop" || object[key].content.referenceType === "props"){
-                    result += camelCaseToDash(printedKey) + "=" + stateAndProps["propDefinitions"][object[key].content.id].defaultValue  + " "
-                } else {
-                    result += camelCaseToDash(printedKey) + "=" + stateAndProps["stateDefinitons"][object[key].content.id].defaultValue  + " "
-                }
-                return result;
-            }
-            result += camelCaseToDash(key) + "=" + object[key].content + " "
+            result += camelCaseToDash(printedKey) + "=" + object[key].content + " "
         } else {
-            if(/\$/.test(object[key])){
-                const parts = object[key].split(".");
-                if(parts[0] === "$props" || parts[0] === "$prop"){
-                    result += camelCaseToDash(printedKey) + "=" + stateAndProps["propDefinitions"][parts[1]].defaultValue + " "
-                } else {
-                    result += camelCaseToDash(printedKey) + "=" + stateAndProps["stateDefinitions"][parts[1]].defaultValue + " "
-                }
-                return result;
-            }
-            result += camelCaseToDash(key) + "=" + object[key] + " "
+            result += camelCaseToDash(printedKey) + "=" + object[key] + " "
         }
     });
     return result;
 }
+
 const UIDLToHtml = (UIDLArray:object[]) => {
     let stack:string[] = []
     let prevDepth:number = -1;
     let styleResult : string = "";
     const className : string = "class";
-    const stateAndProps = UIDLArray[UIDLArray.length - 1]["elementInfo"];
     let counter = 0;
     let htmlResult : string = UIDLArray.reduce((accumulator : string, entry:ParsedUIDLNode) => {
         counter += 1;
@@ -93,7 +78,7 @@ const UIDLToHtml = (UIDLArray:object[]) => {
                 return
             }
             if(key === "attrs"){
-                accumulator = getAttrContents(accumulator, entry.elementInfo[key], stateAndProps, stack[stack.length - 1]);
+                accumulator = getAttrContents(accumulator, entry.elementInfo[key], stack[stack.length - 1]);
                 return
             }
             if(key === "style"){

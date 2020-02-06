@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import UIDLToHtml from "../utils/UIDLToHtml";
 import UIDLParser from "../utils/UIDLParser";
+import StateAndPropsToValues from "../utils/StateAndPropsToValues";
 
 export default function UIDLtoHTMLComponent(props): any {
   useEffect(() => {
@@ -11,8 +12,9 @@ export default function UIDLtoHTMLComponent(props): any {
       UIDLObject = "";
     }
     console.log(UIDLParser(JSON.parse(JSON.stringify(UIDLObject))));
+    console.log(StateAndPropsToValues(UIDLParser(JSON.parse(JSON.stringify(UIDLObject)))));
     const { html, style } = UIDLToHtml(
-      UIDLParser(JSON.parse(JSON.stringify(UIDLObject)))
+      StateAndPropsToValues(UIDLParser(JSON.parse(JSON.stringify(UIDLObject))))
     );
     document.getElementById("htmlContainer").innerHTML = html;
 
