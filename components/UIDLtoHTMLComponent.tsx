@@ -11,7 +11,7 @@ export default function UIDLtoHTMLComponent(props): any {
     } catch (e) {
       UIDLObject = "";
     }
-    
+    console.log(UIDLParser(JSON.parse(JSON.stringify(UIDLObject))))
     const {html, style} = UIDLToHtml(UIDLParser(JSON.parse(JSON.stringify(UIDLObject))));
     
     document.getElementById("htmlContainer").innerHTML = html;
