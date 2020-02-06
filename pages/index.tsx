@@ -5,7 +5,7 @@ import FlipWrapper from "../components/FlipWraper";
 const Home: NextPage<{ userAgent: string }> = () => {
   return (
     <div>
-      <FlipWrapper></FlipWrapper>
+      <FlipWrapper />
     </div>
   );
 };

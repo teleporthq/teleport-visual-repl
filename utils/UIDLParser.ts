@@ -2,13 +2,11 @@ import { UIDLElementContent } from "../interfaces/UIDL";
 const htmlMap = require("../utils/html-mapping.json");
 
 const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
-  let defaultState: object;
-  let defaultProps: object;
   const array: UIDLElementContent[] = Array.isArray(obj) ? obj : [obj];
 
   return array.reduce(
     (acc: UIDLElementContent[], value: UIDLElementContent) => {
-      if (value.reference && !value.value) {
+      if (value.reference && value.value) {
         value.filterCondition = "filter";
         delete value.node;
         delete value.reference;
@@ -16,13 +14,6 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
       if (value.node) {
         if (depthLevel !== -1) {
           value.filterCondition = "filter";
-        } else {
-          if (value.stateDefinitions) {
-            defaultState = value.stateDefinitions;
-          }
-          if (value.propDefinitions) {
-            defaultProps = value.propDefinitions;
-          }
         }
         const nestedNode = UILDParser(value.node.content, depthLevel + 1);
         acc = acc.concat(...nestedNode);
@@ -37,6 +28,7 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
       if (value.elementType && /[A-Z]/g.test(value.elementType)) {
         value.elementType = "div";
       }
+      console.log(acc);
 
       acc.push({ elementInfo: value, depthLevel });
 
@@ -60,7 +52,6 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
               return { type: "static", content: child };
             }
           });
-
           value.children = test;
         }
         const newValues = value.children.map(child => {
@@ -71,7 +62,6 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
             Array.from(child.content.dataSource.content).forEach(content => {
               console.log(content);
             });
-
             return UILDParser(child.content, depthLevel);
           }
           return UILDParser(child.content, depthLevel + 1);
@@ -80,39 +70,40 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
 
         delete value.children;
       }
-      return fixSpecialCases(acc, defaultState, defaultProps);
+      return acc;
     },
     []
   );
 };
 
-const fixSpecialCases = (
-  result: UIDLElementContent[],
-  state,
-  props: object
-) => {
-  // filter values that can't be transformed into HTML ex: reference
-  const filteredResult = result.filter(
-    element => element.elementInfo["filterCondition"] !== "filter"
-  );
-  // Treat DefaultProps Case
-  if (props && Object.keys(props).length) {
-    const consideringProps = filteredResult.map((element, i) => {
-      let myFindById = Object.keys(props).find(
-        prop => prop === element.elementInfo["id"]
-      );
-      if (myFindById) {
-        return (element = {
-          elementInfo: props[myFindById].defaultValue,
-          depthLevel: element.depthLevel
-        });
-      } else {
-        return element;
-      }
-    });
-    return consideringProps;
-  }
-  return filteredResult;
-};
+// delete?
+// const fixSpecialCases = (
+//   result: UIDLElementContent[],
+//   state,
+//   props: object
+// ) => {
+//   // filter values that can't be transformed into HTML ex: reference
+//   const filteredResult = result.filter(
+//     element => element.elementInfo["filterCondition"] !== "filter"
+//   );
+//   // Treat DefaultProps Case
+//   if (props && Object.keys(props).length) {
+//     const consideringProps = filteredResult.map((element, i) => {
+//       let myFindById = Object.keys(props).find(
+//         prop => prop === element.elementInfo["id"]
+//       );
+//       if (myFindById) {
+//         return (element = {
+//           elementInfo: props[myFindById].defaultValue,
+//           depthLevel: element.depthLevel
+//         });
+//       } else {
+//         return element;
+//       }
+//     });
+//     return consideringProps;
+//   }
+//   return filteredResult;
+// };
 
 export default UILDParser;
