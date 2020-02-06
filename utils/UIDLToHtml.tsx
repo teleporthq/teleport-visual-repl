@@ -20,10 +20,10 @@ function getStyleContents(className : string, object : unknown, result : string 
                     camelCaseToDash(key) + "{" + "." + className + "{ " :
                     camelCaseToDash(key) + "{"
                 result = key.match("&") ?
-                    getStyleContents(className, object[key].content, result, false):
-                    getStyleContents(className, object[key].content, result)
+                    getStyleContents(className, object[key].content || object[key], result, false):
+                    getStyleContents(className, object[key].content || object[key], result)
             } else {
-                result += camelCaseToDash(key) + ":" + eliminateQuotes(object[key].content) + "; "
+                result += camelCaseToDash(key) + ":" + eliminateQuotes(object[key].content || object[key]) + "; "
             }
         } else {
             result += camelCaseToDash(key) + ":" + eliminateQuotes(object[key]) + "; "
