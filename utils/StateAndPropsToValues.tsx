@@ -6,19 +6,21 @@ function ParseAndReplace(object : object, stateAndProps : object) : object{
             if(/\$/g.test(object[key])){
                 const parts = object[key].split(".");
                 if(parts[0] === "$props" || parts[0] === "$prop"){
-                    object[key] = stateAndProps["propDefinitions"][parts[1]].defaultValue || ""
+                    object[key] = stateAndProps["propDefinitions"][parts[1]]?.defaultValue || ""
                 } else if(parts[0] === "$state") {
-                    object[key] = stateAndProps["stateDefinitions"][parts[1]].defaultValue || ""
-                } // else for local
+                    console.log("Before:", object);
+                    object[key] = stateAndProps["stateDefinitions"][parts[1]]?.defaultValue || ""
+                    console.log("After:", object);
+                } // TO-DO: else for local
             }
         }
         if(typeof object[key] === "object"){
             if(object[key].referenceType){
                 if(object[key].referenceType === "prop" || object[key].referenceType === "props"){
-                    object[key] = stateAndProps["propDefinitions"][object[key].id].defaultValue || ""
+                    object[key] = stateAndProps["propDefinitions"][object[key].id]?.defaultValue || ""
                 } else if (object[key].referenceType === "state") {
-                    object[key] = stateAndProps["stateDefinitions"][object[key].id].defaultValue || ""
-                } //else for local
+                    object[key] = stateAndProps["stateDefinitions"][object[key].id]?.defaultValue || ""
+                } // TO-DO: else for local
             } else {
                 object[key] = ParseAndReplace(object[key], stateAndProps);
             }
@@ -32,9 +34,22 @@ function ParseAndReplace(object : object, stateAndProps : object) : object{
 
 const StateAndPropsToValues = (FlattenedUIDL : object[]) => {
     const stateAndProps = FlattenedUIDL[FlattenedUIDL.length - 1]["elementInfo"];
-    return FlattenedUIDL.map(element => {
+    const result = FlattenedUIDL
+    .map(element => {
         return ParseAndReplace(element, stateAndProps)
-    }).filter(
+    })
+
+    for(let i =0; i<result.length; i++){
+        let ref = result[i]["elementInfo"]["reference"]
+        if(ref){
+            if(ref["content"] !== result[i]["elementInfo"]["value"]){
+                console.log(ref["content"], result[i]["elementInfo"]["value"])
+                result[i-1]["elementInfo"] = {filterCondition : "filter"}
+            }
+        }
+    }
+
+    return result.filter(
         element => element["elementInfo"]["filterCondition"] !== "filter"
     )
 }

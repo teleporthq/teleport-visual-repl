@@ -5,28 +5,32 @@ import StateAndPropsToValues from "../utils/StateAndPropsToValues";
 
 export default function UIDLtoHTMLComponent(props): any {
   useEffect(() => {
-    let UIDLObject: unknown;
-    try {
+    try{
+      let UIDLObject: unknown;
       UIDLObject = JSON.parse(props.uidl);
-    } catch (e) {
-      UIDLObject = "";
-    }
-    console.log(UIDLParser(JSON.parse(JSON.stringify(UIDLObject))));
-    console.log(StateAndPropsToValues(UIDLParser(JSON.parse(JSON.stringify(UIDLObject)))));
-    const { html, style } = UIDLToHtml(
-      StateAndPropsToValues(UIDLParser(JSON.parse(JSON.stringify(UIDLObject))))
-    );
-    document.getElementById("htmlContainer").innerHTML = html;
 
-    if (document.getElementById("generatedElementStyle")) {
-      document.getElementById("generatedElementStyle").innerHTML = style;
-      return;
+      //console.log(UIDLParser(JSON.parse(JSON.stringify(UIDLObject))));
+      //console.log(StateAndPropsToValues(UIDLParser(JSON.parse(JSON.stringify(UIDLObject)))));
+      const { html, style } = UIDLToHtml(
+        StateAndPropsToValues(UIDLParser(JSON.parse(JSON.stringify(UIDLObject))))
+      );
+
+      document.getElementById("htmlContainer").innerHTML = html;
+
+      if (document.getElementById("generatedElementStyle")) {
+        document.getElementById("generatedElementStyle").innerHTML = style;
+        return;
+      }
+
+      let sheet: HTMLStyleElement = document.createElement("style");
+      sheet.innerHTML = style;
+      sheet.id = "generatedElementStyle";
+      document.body.appendChild(sheet);
+
+    } catch (e){
+      document.getElementById("htmlContainer").innerHTML = e;
     }
 
-    let sheet: HTMLStyleElement = document.createElement("style");
-    sheet.innerHTML = style;
-    sheet.id = "generatedElementStyle";
-    document.body.appendChild(sheet);
   }, [props]);
 
   return (

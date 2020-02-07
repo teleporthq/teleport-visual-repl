@@ -1,13 +1,25 @@
 import { ParsedUIDLNode } from "../interfaces/ParsedUIDLNode";
 
 function camelCaseToDash( myStr : string ) {
-    return myStr.replace( /([a-z])([A-Z])/g, '$1-$2' ).toLowerCase().replace(/&/g, '');
+    try{
+        return myStr.replace( /([a-z])([A-Z])/g, '$1-$2' ).toLowerCase().replace(/&/g, '');
+    } catch(e){
+        return "";
+    }
+   
 }
 function eliminateQuotes( myStr : string){
-    return myStr.replace( /"/g, '');
+    try{
+        return myStr.replace( /"/g, '');
+    } catch (e){
+        return "";
+    }
+    
 }
 function getStyleContents(className : string, object : unknown, result : string = "." + className + "{", end : boolean = true){
-    Object.keys(object).forEach(key => {
+    //sort keys first to avoid the trouble caused by "@media" and "&"
+    let sortedKeys = Object.keys(object).sort().reverse();
+    sortedKeys.forEach(key => {
         if(key.match("@media")){
             result += "}"
         }
@@ -34,6 +46,7 @@ function getStyleContents(className : string, object : unknown, result : string 
 
 function getAttrContents(result : string, object : unknown, currentElement : string){
     Object.keys(object).forEach(key => {
+
         let printedKey : string;
         if(currentElement === "img" && key === "url"){
             printedKey = "src";
@@ -42,6 +55,7 @@ function getAttrContents(result : string, object : unknown, currentElement : str
         } else {
             printedKey = key;
         }
+        
         if(typeof object[key] !== "string"){
             result += camelCaseToDash(printedKey) + "=" + object[key].content + " "
         } else {
@@ -55,14 +69,14 @@ const UIDLToHtml = (UIDLArray:object[]) => {
     let stack:string[] = []
     let prevDepth:number = -1;
     let styleResult : string = "";
-    const className : string = "class";
+    const className : string = "UIDLToHTMLClass";
     let counter = 0;
     let htmlResult : string = UIDLArray.reduce((accumulator : string, entry:ParsedUIDLNode) => {
         counter += 1;
         const elementType : string = /[A-Z]/.test(entry.elementInfo["elementType"]) ? "div" : entry.elementInfo["elementType"]
         if(entry.depthLevel === -1){
             return accumulator
-        }``
+        }
         if(typeof entry.elementInfo === "string"){
             return accumulator += entry.elementInfo
         }
@@ -86,11 +100,9 @@ const UIDLToHtml = (UIDLArray:object[]) => {
                 styleResult += getStyleContents(className + counter, entry.elementInfo[key]);
                 return
             }
-            accumulator += key + "="
-            if(typeof entry.elementInfo[key] === "string"){
-                accumulator += entry.elementInfo[key] + " ";
-                return;
-            }
+            accumulator += key + "=" + entry.elementInfo[key] + " ";
+            return;
+            
         })
         accumulator += ">"
         prevDepth = entry.depthLevel
