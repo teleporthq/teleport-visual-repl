@@ -5,36 +5,46 @@ import StateAndPropsToValues from "../utils/StateAndPropsToValues";
 
 export default function UIDLtoHTMLComponent({ uidl }): any {
   const htmlContainer = useRef(null);
-  console.log(htmlContainer);
 
   useEffect(() => {
-    try {
-      let UIDLObject: unknown;
-      UIDLObject = JSON.parse(uidl);
-      // console.log(UIDLParser(JSON.parse(JSON.stringify(UIDLObject))));
-      // console.log(
-      //   StateAndPropsToValues(UIDLParser(JSON.parse(JSON.stringify(UIDLObject))))
-      // );
-      const { html, style } = UIDLToHtml(
-        StateAndPropsToValues(
-          UIDLParser(JSON.parse(JSON.stringify(UIDLObject)))
-        )
-      );
-      htmlContainer.current.innerHTML = html;
-
-      if (document.getElementById("generatedElementStyle")) {
-        document.getElementById("generatedElementStyle").innerHTML = style;
-        return;
-      }
-
-      let sheet: HTMLStyleElement = document.createElement("style");
-      sheet.innerHTML = style;
-      sheet.id = "generatedElementStyle";
-      document.body.appendChild(sheet);
-    } catch (e) {
-      htmlContainer.current.innerHTML = e;
+    if (!uidl) {
+      htmlContainer.current.innerText = " Waiting for UIDL input...";
+      return;
     }
+
+    const jsonValidity = checkIfJsonIsValid(uidl);
+    if (!jsonValidity.isValid) {
+      htmlContainer.current.innerText = jsonValidity.message;
+      return;
+    }
+
+    const UIDLObject = jsonValidity.value;
+
+    const parsedUIDL = UIDLParser(JSON.parse(JSON.stringify(UIDLObject)));
+    const stateAndPropsValues = StateAndPropsToValues(parsedUIDL);
+
+    const { html, style } = UIDLToHtml(stateAndPropsValues);
+    htmlContainer.current.innerHTML = html;
+
+    if (document.getElementById("generatedElementStyle")) {
+      document.getElementById("generatedElementStyle").innerHTML = style;
+      return;
+    }
+
+    let sheet: HTMLStyleElement = document.createElement("style");
+    sheet.innerHTML = style;
+    sheet.id = "generatedElementStyle";
+    document.body.appendChild(sheet);
   }, [uidl]);
+
+  const checkIfJsonIsValid = (jsonAsString: string) => {
+    try {
+      const parsedValue = JSON.parse(jsonAsString);
+      return { isValid: true, value: parsedValue };
+    } catch (error) {
+      return { isValid: false, message: error.message };
+    }
+  };
 
   return (
     <div className="container">
