@@ -76,44 +76,44 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
 };
 
 // delete?
-// const fixSpecialCases = (
-//   result: UIDLElementContent[],
-//   state,
-//   props: object
-// ) => {
-//   // filter values that can't be transformed into HTML ex: reference
-//   const filteredResult = result.filter(
-//     element => element.elementInfo["filterCondition"] !== "filter"
-//   );
-//   // Treat DefaultProps Case
-//   if (props && Object.keys(props).length) {
-//     const consideringProps = filteredResult.map((element, i) => {
-//       let myFindById = Object.keys(props).find(
-//         prop => prop === element.elementInfo["id"]
-//       );
+const fixSpecialCases = (
+  result: UIDLElementContent[],
+  state,
+  props: object
+) => {
+  // filter values that can't be transformed into HTML ex: reference
+  const filteredResult = result.filter(
+    element => element.elementInfo["filterCondition"] !== "filter"
+  );
+  // Treat DefaultProps Case
+  if (props && Object.keys(props).length) {
+    const consideringProps = filteredResult.map((element, i) => {
+      let myFindById = Object.keys(props).find(
+        prop => prop === element.elementInfo["id"]
+      );
 
-//       if (element.elementInfo["attrs"]) {
-//         let myFindByAttr = Object.keys(props).find(
-//           prop => prop === element.elementInfo["attrs"]
-//         );
-//         // console.log(element);
-//         // element.elementInfo["attrs"][props[i]];
-//       }
-//       // console.log("Element: ", element.elementInfo);
-//       // console.log("*****************BREAK************************");
+      if (element.elementInfo["attrs"]) {
+        let myFindByAttr = Object.keys(props).find(
+          prop => prop === element.elementInfo["attrs"]
+        );
+        // console.log(element);
+        // element.elementInfo["attrs"][props[i]];
+      }
+      // console.log("Element: ", element.elementInfo);
+      // console.log("*****************BREAK************************");
 
-//       if (myFindById) {
-//         return (element = {
-//           elementInfo: props[myFindById].defaultValue,
-//           depthLevel: element.depthLevel
-//         });
-//       } else {
-//         return element;
-//       }
-//     });
-//     return consideringProps;
-//   }
-//   return filteredResult;
-// };
+      if (myFindById) {
+        return (element = {
+          elementInfo: props[myFindById].defaultValue,
+          depthLevel: element.depthLevel
+        });
+      } else {
+        return element;
+      }
+    });
+    return consideringProps;
+  }
+  return filteredResult;
+};
 
 export default UILDParser;

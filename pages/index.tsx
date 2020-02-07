@@ -4,7 +4,6 @@ import { useState } from "react";
 import SplitEditor from "../components/SplitEditor";
 import UIDLtoHTMLComponent from "../components/UIDLtoHTMLComponent";
 
-
 const Home: NextPage<{ userAgent: string }> = () => {
   const [isHidden, setIsHidden] = useState(false);
   const [uidl, setUidl] = useState("");
@@ -19,7 +18,9 @@ const Home: NextPage<{ userAgent: string }> = () => {
   return (
     <div className="mainContainer">
       <SplitEditor onChange={handleChange} uidl={uidl} isHidden={isHidden} />
-      <button className="hideButton" id="hide" onClick = {() => handleClick()}>{isHidden ? <span>></span> : <span>&lt;</span>}</button>
+      <button className="hideButton" id="hide" onClick={() => handleClick()}>
+        {isHidden ? <span>></span> : <span>&lt;</span>}
+      </button>
       <UIDLtoHTMLComponent uidl={uidl} />
       <style jsx>{`
         .mainContainer {

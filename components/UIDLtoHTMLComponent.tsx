@@ -1,21 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import UIDLToHtml from "../utils/UIDLToHtml";
 import UIDLParser from "../utils/UIDLParser";
 import StateAndPropsToValues from "../utils/StateAndPropsToValues";
 
-export default function UIDLtoHTMLComponent(props): any {
+export default function UIDLtoHTMLComponent({ uidl }): any {
+  const htmlContainer = useRef(null);
+  console.log(htmlContainer);
+
   useEffect(() => {
-    try{
+    try {
       let UIDLObject: unknown;
-      UIDLObject = JSON.parse(props.uidl);
-
-      //console.log(UIDLParser(JSON.parse(JSON.stringify(UIDLObject))));
-      //console.log(StateAndPropsToValues(UIDLParser(JSON.parse(JSON.stringify(UIDLObject)))));
+      UIDLObject = JSON.parse(uidl);
+      // console.log(UIDLParser(JSON.parse(JSON.stringify(UIDLObject))));
+      // console.log(
+      //   StateAndPropsToValues(UIDLParser(JSON.parse(JSON.stringify(UIDLObject))))
+      // );
       const { html, style } = UIDLToHtml(
-        StateAndPropsToValues(UIDLParser(JSON.parse(JSON.stringify(UIDLObject))))
+        StateAndPropsToValues(
+          UIDLParser(JSON.parse(JSON.stringify(UIDLObject)))
+        )
       );
-
-      document.getElementById("htmlContainer").innerHTML = html;
+      htmlContainer.current.innerHTML = html;
 
       if (document.getElementById("generatedElementStyle")) {
         document.getElementById("generatedElementStyle").innerHTML = style;
@@ -26,17 +31,19 @@ export default function UIDLtoHTMLComponent(props): any {
       sheet.innerHTML = style;
       sheet.id = "generatedElementStyle";
       document.body.appendChild(sheet);
-
-    } catch (e){
-      document.getElementById("htmlContainer").innerHTML = e;
+    } catch (e) {
+      htmlContainer.current.innerHTML = e;
     }
-
-  }, [props]);
+  }, [uidl]);
 
   return (
     <div className="container">
       <div className="htmlWrapper">
-        <div id="htmlContainer" className="htmlContainer"></div>
+        <div
+          id="htmlContainer"
+          className="htmlContainer"
+          ref={htmlContainer}
+        ></div>
       </div>
 
       <style jsx>{`
