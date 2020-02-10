@@ -65,7 +65,7 @@ export default function UIDLtoHTMLComponent({ uidl }): any {
           padding: 10px;
           position: relative;
           border: 1px solid #00000010;
-          margin-left: 10px;
+          margin-left: 2px;
         }
         .htmlWrapper {
           position: relative;

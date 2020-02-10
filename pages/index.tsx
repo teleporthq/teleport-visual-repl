@@ -4,9 +4,8 @@ import { useState } from "react";
 import SplitEditor from "../components/SplitEditor";
 import UIDLtoHTMLComponent from "../components/UIDLtoHTMLComponent";
 
-import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 const Home: NextPage<{ userAgent: string }> = () => {
   const [isHidden, setIsHidden] = useState(false);
@@ -22,21 +21,25 @@ const Home: NextPage<{ userAgent: string }> = () => {
   return (
     <div className="main">
       <div className="nav-bar">
-        <a href="https://teleporthq.io/"> <img  alt="logo" src='static/teleporthq-logo.png' /> </a>
+        <a href="https://teleporthq.io/">
+          {" "}
+          <img alt="logo" src="static/teleporthq-logo.png" />{" "}
+        </a>
         <div className="menu-items">
-          <a href="https://docs.teleporthq.io/"> Official Docs</a>
-          <a href="https://github.com/teleporthq/teleport-code-generators"> Contribute on GitHub! 
+          <a href="https://docs.teleporthq.io/">Official Docs</a>
+          <a href="https://github.com/teleporthq/teleport-code-generators">
+            Contribute <FontAwesomeIcon icon={faGithub} size="lg" />
           </a>
         </div>
       </div>
 
-    <div className="mainContainer" >
+      <div className="mainContainer">
         <SplitEditor onChange={handleChange} uidl={uidl} isHidden={isHidden} />
         <button className="hideButton" id="hide" onClick={() => handleClick()}>
           {isHidden ? <span>></span> : <span>&lt;</span>}
         </button>
         <UIDLtoHTMLComponent uidl={uidl} />
-    </div>
+      </div>
 
       <style jsx>{`
         .main {
@@ -47,7 +50,7 @@ const Home: NextPage<{ userAgent: string }> = () => {
           margin: 0;
         }
         .nav-bar {
-          display:flex;
+          display: flex;
           width: 100%;
           justify-content: space-between;
           align-items: center;
@@ -56,16 +59,16 @@ const Home: NextPage<{ userAgent: string }> = () => {
           box-sizing: border-box;
           border-bottom: 1px solid #00000010;
         }
-        .meniu-items{
+        .meniu-items {
           display: flex;
           align-items: center;
           font-size: 15px;
         }
-        img{
+        img {
           height: 2.2rem;
           vertical-align: middle;
         }
-        a{
+        a {
           padding: 0 10px;
           text-decoration: none;
           transition: color 0.2s;
@@ -83,25 +86,24 @@ const Home: NextPage<{ userAgent: string }> = () => {
         }
         .hideButton {
           postion: relative;
-          height: 30%;
-          margin-top: 16%;
-          margin-left: 5px;
-          width: 2%;
-          padding: 0;
-          background: #404040;
-          color: #ffffff !important;
+          height: 98%;
+          margin: auto 4px;
           border: none;
-          border-radius: 6px;
+          border-radius: 5px;
+          width: 40px;
+          padding: 0;
+          background: #6a6a6a;
+          color: #ffffff !important;
           display: inline-block;
           transition: all 0.3s ease 0s;
+          outline: none;
         }
-        .hideButton:hover{
-          color: #404040 !important;
+        .hideButton:hover {
           font-weight: 700 !important;
           letter-spacing: 3px;
-          background: none;
-          -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-          -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+          background: #333;
+          -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+          -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
           transition: all 0.3s ease 0s;
         }
       `}</style>
