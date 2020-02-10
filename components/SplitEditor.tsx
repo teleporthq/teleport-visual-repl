@@ -31,9 +31,13 @@ const SplitEditor = ({ isHidden, onChange, uidl }) => {
           width: 100%;
         }
         .container {
-          position: relative;
+          border-radius: 10px;
           height: 100%;
-          min-width: 48%;
+          width: 80%;
+          overflow: hidden;
+          z-index: 3;
+          padding: 0 0 30px 0;
+          position: relative;
         }
       `}</style>
     </div>
