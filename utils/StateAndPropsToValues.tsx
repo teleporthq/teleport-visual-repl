@@ -5,12 +5,22 @@ function ParseAndReplace(object: object, stateAndProps: object): object {
         const parts = object[key].split(".");
         if (parts[0] === "$props" || parts[0] === "$prop") {
           object[key] = stateAndProps["propDefinitions"]
-            ? stateAndProps["propDefinitions"][parts[1]]?.defaultValue ?? ""
-            : "";
+            ? stateAndProps["propDefinitions"][parts[1]]?.defaultValue ??
+              new Error(
+                "The value " +
+                  object[key] +
+                  " does not exist. Pleas add it in propDefinitions"
+              )
+            : new Error("Props are undefined!");
         } else if (parts[0] === "$state") {
           object[key] = stateAndProps["stateDefinitions"]
-            ? stateAndProps["stateDefinitions"][parts[1]]?.defaultValue ?? ""
-            : "";
+            ? stateAndProps["stateDefinitions"][parts[1]]?.defaultValue ??
+              new Error(
+                "The value " +
+                  object[key] +
+                  " does not exist. Pleas add it in stateDefinitions"
+              )
+            : new Error("State is undefined!");
         }
       }
     }
@@ -20,17 +30,30 @@ function ParseAndReplace(object: object, stateAndProps: object): object {
           object[key].referenceType === "prop" ||
           object[key].referenceType === "props"
         ) {
-          object[key] =
-            stateAndProps["propDefinitions"][object[key].id]?.defaultValue ??
-            "";
+          object[key] = stateAndProps["propDefinitions"]
+            ? stateAndProps["propDefinitions"][object[key].id]?.defaultValue ??
+              new Error(
+                "The value " +
+                  object[key] +
+                  " does not exist. Pleas add it in propDefinitions"
+              )
+            : new Error("Props are undefined!");
         } else if (object[key].referenceType === "state") {
-          object[key] =
-            stateAndProps["stateDefinitions"][object[key].id]?.defaultValue ??
-            "";
+          object[key] = stateAndProps["stateDefinitions"]
+            ? stateAndProps["stateDefinitions"][object[key].id]?.defaultValue ??
+              new Error(
+                "The value " +
+                  object[key] +
+                  " does not exist. Pleas add it in stateDefinitions"
+              )
+            : new Error("State is undefined!");
         }
       } else {
         object[key] = ParseAndReplace(object[key], stateAndProps);
       }
+    }
+    if (object[key] instanceof Error) {
+      throw object[key];
     }
   });
 
