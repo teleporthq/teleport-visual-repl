@@ -12,8 +12,12 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
 
       if (value.reference && value.value != "0" && !value.value) {
         value.filterCondition = "filter";
-        delete value.node;
         delete value.reference;
+      }
+
+      if (value.elementType) {
+        value.elementType =
+          htmlMap.elements[value.elementType]?.elementType || value.elementType;
       }
 
       if (value.node) {
@@ -23,11 +27,6 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
         const nestedNode = UILDParser(value.node.content, depthLevel + 1);
         acc = acc.concat(...nestedNode);
         delete value.node;
-      }
-
-      if (value.elementType) {
-        value.elementType =
-          htmlMap.elements[value.elementType]?.elementType || value.elementType;
       }
 
       acc.push({ elementInfo: value, depthLevel });
