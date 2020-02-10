@@ -17,24 +17,27 @@ export default function UIDLtoHTMLComponent({ uidl }): any {
       htmlContainer.current.innerText = jsonValidity.message;
       return;
     }
+    try {
+      const UIDLObject = jsonValidity.value;
 
-    const UIDLObject = jsonValidity.value;
+      const parsedUIDL = UIDLParser(JSON.parse(JSON.stringify(UIDLObject)));
+      const stateAndPropsValues = StateAndPropsToValues(parsedUIDL);
 
-    const parsedUIDL = UIDLParser(JSON.parse(JSON.stringify(UIDLObject)));
-    const stateAndPropsValues = StateAndPropsToValues(parsedUIDL);
+      const { html, style } = UIDLToHtml(stateAndPropsValues);
+      htmlContainer.current.innerHTML = html;
 
-    const { html, style } = UIDLToHtml(stateAndPropsValues);
-    htmlContainer.current.innerHTML = html;
+      if (document.getElementById("generatedElementStyle")) {
+        document.getElementById("generatedElementStyle").innerHTML = style;
+        return;
+      }
 
-    if (document.getElementById("generatedElementStyle")) {
-      document.getElementById("generatedElementStyle").innerHTML = style;
-      return;
+      let sheet: HTMLStyleElement = document.createElement("style");
+      sheet.innerHTML = style;
+      sheet.id = "generatedElementStyle";
+      document.body.appendChild(sheet);
+    } catch (e) {
+      htmlContainer.current.innerHTML = e.message;
     }
-
-    let sheet: HTMLStyleElement = document.createElement("style");
-    sheet.innerHTML = style;
-    sheet.id = "generatedElementStyle";
-    document.body.appendChild(sheet);
   }, [uidl]);
 
   const checkIfJsonIsValid = (jsonAsString: string) => {
