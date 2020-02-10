@@ -6,11 +6,16 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
 
   return array.reduce(
     (acc: UIDLElementContent[], value: UIDLElementContent) => {
+      if (!value) {
+        return acc;
+      }
+
       if (value.reference && value.value != "0" && !value.value) {
         value.filterCondition = "filter";
         delete value.node;
         delete value.reference;
       }
+
       if (value.node) {
         if (depthLevel !== -1) {
           value.filterCondition = "filter";
