@@ -34,7 +34,7 @@ function ParseAndReplace(object: object, stateAndProps: object): object {
             ? stateAndProps["propDefinitions"][object[key].id]?.defaultValue ??
               new Error(
                 "The value " +
-                  object[key] +
+                  object[key].id +
                   " does not exist. Pleas add it in propDefinitions"
               )
             : new Error("Props are undefined!");
@@ -43,7 +43,7 @@ function ParseAndReplace(object: object, stateAndProps: object): object {
             ? stateAndProps["stateDefinitions"][object[key].id]?.defaultValue ??
               new Error(
                 "The value " +
-                  object[key] +
+                  object[key].id +
                   " does not exist. Pleas add it in stateDefinitions"
               )
             : new Error("State is undefined!");
