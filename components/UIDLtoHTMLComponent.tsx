@@ -22,7 +22,10 @@ export default function UIDLtoHTMLComponent({ uidl }): any {
       const UIDLObject = jsonValidity.value;
 
       const parsedUIDL = UIDLParser(JSON.parse(JSON.stringify(UIDLObject)));
+      console.log("RESULT: ", parsedUIDL);
+
       const stateAndPropsValues = StateAndPropsToValues(parsedUIDL);
+      console.log("FILTERED RESULT: ", stateAndPropsValues);
       setComponentName(parsedUIDL[parsedUIDL.length - 1].elementInfo["name"]);
       const { html, style } = UIDLToHtml(stateAndPropsValues);
       htmlContainer.current.innerHTML = html;
@@ -66,7 +69,7 @@ export default function UIDLtoHTMLComponent({ uidl }): any {
           height: 90%;
           width: 95%;
           border-radius: 10px;
-          overflow: hidden;
+          overflow: scroll;
           padding: 10px;
           position: relative;
           border: 1px solid #00000010;
@@ -80,6 +83,7 @@ export default function UIDLtoHTMLComponent({ uidl }): any {
         .componentName {
           text-align: center;
           font-weight: bold;
+          font-size: 20px;
         }
         .container {
           height: 100%;

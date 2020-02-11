@@ -59,6 +59,7 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
           }
           return UILDParser(child.content, depthLevel + 1);
         });
+
         acc = acc.concat(...newValues);
 
         delete value.children;

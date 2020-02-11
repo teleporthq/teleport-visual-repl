@@ -59,11 +59,6 @@ const Home: NextPage<{ userAgent: string }> = () => {
           box-sizing: border-box;
           border-bottom: 1px solid #00000010;
         }
-        .meniu-items {
-          display: flex;
-          align-items: center;
-          font-size: 15px;
-        }
         img {
           height: 2.2rem;
           vertical-align: middle;
@@ -73,7 +68,7 @@ const Home: NextPage<{ userAgent: string }> = () => {
           text-decoration: none;
           transition: color 0.2s;
           color: #2c3e50;
-          font-size: 15px;
+          font-size: 16px;
         }
         .mainContainer {
           display: flex;
@@ -82,11 +77,10 @@ const Home: NextPage<{ userAgent: string }> = () => {
           padding-top: 10px;
           padding-left: 3px;
           box-sizing: border-box;
-          justify-content: space-around;
         }
         .hideButton {
           postion: relative;
-          height: 98%;
+          height: 100%;
           margin: auto 4px;
           border: none;
           border-radius: 5px;
@@ -94,7 +88,6 @@ const Home: NextPage<{ userAgent: string }> = () => {
           padding: 0;
           background: #6a6a6a;
           color: #ffffff !important;
-          display: inline-block;
           transition: all 0.3s ease 0s;
           outline: none;
         }

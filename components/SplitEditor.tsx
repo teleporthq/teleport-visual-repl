@@ -21,7 +21,7 @@ const SplitEditor = ({ isHidden, onChange, uidl }) => {
       <style jsx>{`
         .wrapper {
           position: relative;
-          height: 100%;
+          height: calc(100% - 0px);
           width: 100%;
           margin: auto;
         }
@@ -33,7 +33,7 @@ const SplitEditor = ({ isHidden, onChange, uidl }) => {
         .container {
           border-radius: 10px;
           height: 100%;
-          width: 80%;
+          min-width: 48%;
           overflow: hidden;
           z-index: 3;
           padding: 0 0 30px 0;

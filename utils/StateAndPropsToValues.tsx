@@ -62,9 +62,29 @@ function ParseAndReplace(object: object, stateAndProps: object): object {
 
 const StateAndPropsToValues = (FlattenedUIDL: object[]) => {
   const stateAndProps = FlattenedUIDL[FlattenedUIDL.length - 1]["elementInfo"];
-  const result = FlattenedUIDL.map(element => {
+  const repeatItems = [];
+  let indexOfRepeat = -1;
+  const result = FlattenedUIDL.map((element, i) => {
+    if (
+      element["elementInfo"]["elementType"] === "ul" &&
+      element["elementInfo"].attrs?.items
+    ) {
+      indexOfRepeat = i;
+      element["elementInfo"].attrs.items.content.forEach(item => {
+        repeatItems.push({
+          elementInfo: { elementType: "li" },
+          depthLevel: element["depthLevel"] + 1
+        });
+        repeatItems.push({
+          elementInfo: item,
+          depthLevel: element["depthLevel"] + 2
+        });
+      });
+    }
     return ParseAndReplace(element, stateAndProps);
   });
+
+  result.splice(indexOfRepeat + 1, 0, ...repeatItems);
 
   for (let i = 0; i < result.length; i++) {
     let ref = result[i]["elementInfo"]["reference"];
