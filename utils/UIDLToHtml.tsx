@@ -103,6 +103,7 @@ const UIDLToHtml = (UIDLArray: object[]) => {
         ? "div"
         : entry.elementInfo["elementType"];
       if (entry.depthLevel === -1) {
+        //-1 means we've finished parsing the element
         return accumulator;
       }
       if (typeof entry.elementInfo === "string") {
