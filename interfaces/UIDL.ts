@@ -33,6 +33,6 @@ export interface UIDLElementContent {
   children?: UIDLNode[];
   dataSource?: object;
   reference?: object;
-  value?: boolean | string;
+  value?: boolean | string | number;
   filterCondition?: any;
 }

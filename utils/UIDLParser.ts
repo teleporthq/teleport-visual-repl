@@ -10,7 +10,7 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
         return acc;
       }
 
-      if (value.reference && value.value != "0" && !value.value) {
+      if (value.reference && !value.value && value.value !== 0) {
         value.filterCondition = "filter";
         delete value.reference;
       }
@@ -63,6 +63,7 @@ const UILDParser = (obj: UIDLElementContent, depthLevel: number = -1) => {
 
         delete value.children;
       }
+
       return acc;
     },
     []

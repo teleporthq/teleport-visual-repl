@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import UIDLToHtml from "../utils/UIDLToHtml";
 import UIDLParser from "../utils/UIDLParser";
 import StateAndPropsToValues from "../utils/StateAndPropsToValues";
 
 export default function UIDLtoHTMLComponent({ uidl }): any {
   const htmlContainer = useRef(null);
+  const [componentName, setComponentName] = useState("");
 
   useEffect(() => {
     if (!uidl) {
@@ -22,7 +23,7 @@ export default function UIDLtoHTMLComponent({ uidl }): any {
 
       const parsedUIDL = UIDLParser(JSON.parse(JSON.stringify(UIDLObject)));
       const stateAndPropsValues = StateAndPropsToValues(parsedUIDL);
-
+      setComponentName(parsedUIDL[parsedUIDL.length - 1].elementInfo["name"]);
       const { html, style } = UIDLToHtml(stateAndPropsValues);
       htmlContainer.current.innerHTML = html;
 
@@ -51,6 +52,7 @@ export default function UIDLtoHTMLComponent({ uidl }): any {
 
   return (
     <div className="container">
+      <p className="componentName">{componentName}</p>
       <div className="htmlWrapper">
         <div
           id="htmlContainer"
@@ -61,7 +63,7 @@ export default function UIDLtoHTMLComponent({ uidl }): any {
 
       <style jsx>{`
         .htmlContainer {
-          height: 95%;
+          height: 90%;
           width: 95%;
           border-radius: 10px;
           overflow: hidden;
@@ -74,6 +76,10 @@ export default function UIDLtoHTMLComponent({ uidl }): any {
           position: relative;
           height: 100%;
           width: 100%;
+        }
+        .componentName {
+          text-align: center;
+          font-weight: bold;
         }
         .container {
           height: 100%;
