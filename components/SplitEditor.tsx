@@ -1,5 +1,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
+import { Button } from "antd";
 
 const CodeEditor = dynamic(import("./AceEditor"), { ssr: false });
 
@@ -8,6 +9,7 @@ const SplitEditor = ({ isHidden, onChange, uidl }) => {
     <div></div>
   ) : (
     <div className="container">
+      <div className="editor-nav"></div>
       <div className="editorContainer">
         <div className="wrapper" id="TEST">
           <CodeEditor
@@ -19,6 +21,15 @@ const SplitEditor = ({ isHidden, onChange, uidl }) => {
       </div>
 
       <style jsx>{`
+        .editor-nav {
+          position: relative;
+          height: 40px;
+          display: flex;
+          flex-direction: row;
+          border-bottom: solid 1px #cccccc20;
+          padding: 10px 10px;
+          background: black;
+        }
         .wrapper {
           position: relative;
           height: calc(100% - 0px);

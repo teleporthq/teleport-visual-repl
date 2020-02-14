@@ -69,7 +69,6 @@ export default function UIDLtoHTMLComponent({ uidl }): any {
           height: 90%;
           width: 95%;
           border-radius: 10px;
-          overflow: scroll;
           padding: 10px;
           position: relative;
           border: 1px solid #00000010;
@@ -88,6 +87,7 @@ export default function UIDLtoHTMLComponent({ uidl }): any {
         .container {
           height: 100%;
           width: 100%;
+          overflow: auto;
         }
       `}</style>
     </div>
