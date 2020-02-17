@@ -1,55 +1,85 @@
-import React from "react";
+import React, { useState } from 'react';
 import ReactDOM from "react-dom";
 
-import { Modal, Button } from "antd";
+import { Modal, Button, Input  } from "antd";
 
-class ModalForm extends React.Component {
-  state = { visible: false };
+const ModalForm = () =>  {
+  const [state, setState] = useState({visible: false});
+  const [toggled, toggle] = useState(false);
+  const [title, setTitle] = useState( "Sign in");
 
-  showModal = () => {
-    this.setState({
+  const showModal = () => {
+    setState({
       visible: true
     });
   };
 
-  handleOk = e => {
-    console.log(e);
-    this.setState({
+  const handleOk = e => {
+    setState({
       visible: false
     });
   };
 
-  handleCancel = e => {
-    console.log(e);
-    this.setState({
+  const handleCancel = e => {
+    setState({
       visible: false
     });
   };
 
-  render() {
+  const toggleR = () => {
+    toggle(toggled => !toggled)
+  };
+
+  const changeTitle = () => {
+    setTitle("Register");
+  };
+
+  const Functia = (event) => {
+    changeTitle();
+    toggleR();
+  };
+
     return (
       <div className="container">
-        <Button type="primary" onClick={this.showModal}>
-          Open Modal
-        </Button>
+        <a onClick={showModal}> 
+          Sign in 
+        </a>
         <Modal
-          title="Basic Modal"
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
+          title={title}
+          visible={state.visible}
+          onOk={handleOk}
+          onCancel={handleCancel}
         >
-          <div>test</div>
+          <div className="input-container">
+
+          <div className="input"> <Input  placeholder="Email"/> </div> 
+            <div className="input"> <Input  placeholder="Password"/> </div>
+
+            <div className="input1"> 
+              {toggled && <> 
+                <Input placeholder="User Name"/> 
+              </> }
+              <a onClick={Functia}> Register </a>
+            </div>
+
+          </div>
         </Modal>
+
         <style jsx>
-          {`
-            .container: {
-              padding: 24px;
-            }
-          `}
+        {`
+        .input-container {
+          display: flex;
+          flex-direction: column;
+        }
+        
+        .input, 
+        .input1 {
+          margin-top: 10px;
+        }
+        `}
         </style>
       </div>
     );
-  }
 }
 
 export default ModalForm;

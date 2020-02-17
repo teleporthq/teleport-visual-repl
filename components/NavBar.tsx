@@ -13,13 +13,12 @@ const NavBar = () => {
         <img alt="logo" src="static/teleporthq-logo.png" />{" "}
       </a>
 
-      <ModalForm />
-      
-      <div className="menu-items">
-        <a href="https://docs.teleporthq.io/">Official Docs</a>
-        <a href="https://github.com/teleporthq/teleport-code-generators">
-          Contribute <FontAwesomeIcon icon={faGithub} size="lg" />
-        </a>
+      <div className="items"> 
+        <ModalForm/>
+          <a href="https://docs.teleporthq.io/">Official Docs</a>
+          <a href="https://github.com/teleporthq/teleport-code-generators">
+              Contribute <FontAwesomeIcon icon={faGithub} size="lg" />
+          </a>
       </div>
 
       <style jsx>
@@ -43,7 +42,13 @@ const NavBar = () => {
             text-decoration: none;
             transition: color 0.2s;
             color: #2c3e50;
+            text-decoration: none;
             font-size: 16px;
+          }
+          .items {
+            display: flex;
+            font-size: 16px;
+            color: black;
           }
         `}
       </style>
