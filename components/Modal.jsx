@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
-
+import { registerUser } from "../api/usersApi";
 import { Modal, Button, Input } from "antd";
 
 const ModalForm = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [register, setRegister] = useState(false);
-  const [email, setEmail] = useState("");
+  const [eMail, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userName, setUserName] = useState("");
+  const [username, setUserName] = useState("");
 
   const showModal = () => {
     setIsVisible({
@@ -18,16 +17,9 @@ const ModalForm = () => {
 
   const handleOk = async () => {
     console.log("I'm in handleOK!!!!!!!!");
-    const myUser = { email, userName, password };
+    const myUser = { eMail, username, password };
     try {
-      const response = await fetch(
-        "http://localhost:8080/authentication/register",
-        {
-          method: "POST",
-          headers: "Content-Type': 'application/json",
-          body: myUser
-        }
-      );
+      const response = await registerUser(myUser);
 
       const data = await response.json();
       console.log(data);
