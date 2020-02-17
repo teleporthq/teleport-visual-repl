@@ -1,85 +1,103 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
-import { Modal, Button, Input  } from "antd";
+import { Modal, Button, Input } from "antd";
 
-const ModalForm = () =>  {
-  const [state, setState] = useState({visible: false});
-  const [toggled, toggle] = useState(false);
-  const [title, setTitle] = useState( "Sign in");
+const ModalForm = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [register, setRegister] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [userName, setUserName] = useState("");
 
   const showModal = () => {
-    setState({
+    setIsVisible({
       visible: true
     });
   };
 
-  const handleOk = e => {
-    setState({
-      visible: false
-    });
+  const handleOk = async () => {
+    console.log("I'm in handleOK!!!!!!!!");
+    const myUser = { email, userName, password };
+    try {
+      const response = await fetch(
+        "http://localhost:8080/authentication/register",
+        {
+          method: "POST",
+          headers: "Content-Type': 'application/json",
+          body: myUser
+        }
+      );
+
+      const data = await response.json();
+      console.log(data);
+    } catch (err) {
+      console.log("Error: ", err);
+    }
+    setIsVisible(true);
   };
 
   const handleCancel = e => {
-    setState({
-      visible: false
-    });
+    setIsVisible(true);
   };
 
-  const toggleR = () => {
-    toggle(toggled => !toggled)
+  const handleRegister = () => {
+    setRegister(!register);
   };
 
-  const changeTitle = () => {
-    setTitle("Register");
-  };
-
-  const Functia = (event) => {
-    changeTitle();
-    toggleR();
-  };
-
-    return (
-      <div className="container">
-        <a onClick={showModal}> 
-          Sign in 
-        </a>
-        <Modal
-          title={title}
-          visible={state.visible}
-          onOk={handleOk}
-          onCancel={handleCancel}
-        >
-          <div className="input-container">
-
-          <div className="input"> <Input  placeholder="Email"/> </div> 
-            <div className="input"> <Input  placeholder="Password"/> </div>
-
-            <div className="input1"> 
-              {toggled && <> 
-                <Input placeholder="User Name"/> 
-              </> }
-              <a onClick={Functia}> Register </a>
-            </div>
-
+  return (
+    <div className="container">
+      <a onClick={showModal}>Sign in</a>
+      <Modal
+        title="Sing in"
+        visible={isVisible.visible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <div className="input-container">
+          <div className="input">
+            {" "}
+            <Input
+              placeholder="Email"
+              onChange={e => setEmail(e.target.value)}
+            />{" "}
           </div>
-        </Modal>
 
-        <style jsx>
+          <div className="input">
+            {" "}
+            <Input
+              placeholder="Password"
+              onChange={e => setPassword(e.target.value)}
+            />{" "}
+          </div>
+
+          <div className="inputR">
+            {register && (
+              <Input
+                placeholder="User Name"
+                onChange={e => setUserName(e.target.value)}
+              />
+            )}
+            <a onClick={handleRegister}> Register </a>
+            <button onClick={handleOk}>test</button>
+          </div>
+        </div>
+      </Modal>
+
+      <style jsx>
         {`
-        .input-container {
-          display: flex;
-          flex-direction: column;
-        }
-        
-        .input, 
-        .input1 {
-          margin-top: 10px;
-        }
+          .input-container {
+            display: flex;
+            flex-direction: column;
+          }
+          .input,
+          .inputR {
+            margin-top: 10px;
+          }
         `}
-        </style>
-      </div>
-    );
-}
+      </style>
+    </div>
+  );
+};
 
 export default ModalForm;
