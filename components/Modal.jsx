@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { handleAuthentication } from "../api/usersApi";
 import { Modal, Button, Input } from "antd";
 
-const ModalForm = ({ isLoggedIn, setIsLoggedIn }) => {
+const ModalForm = ({ isLoggedIn, setIsLoggedIn, setUserGreeting }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [register, setRegister] = useState(false);
 
@@ -11,7 +11,6 @@ const ModalForm = ({ isLoggedIn, setIsLoggedIn }) => {
   const [username, setUserName] = useState("");
 
   const [error, setError] = useState("");
-  const [serverMessage, setServerMessage] = useState("");
 
   const handleApiRequest = async (userData, path) => {
     const response = await handleAuthentication(userData, path);
@@ -21,8 +20,8 @@ const ModalForm = ({ isLoggedIn, setIsLoggedIn }) => {
       throw new Error(data.error);
     }
     localStorage.setItem("access-token", data.accessToken);
-    setServerMessage(data.message);
     setIsVisible(false);
+    setUserGreeting(data.greet);
   };
 
   const handleOk = async e => {
@@ -45,7 +44,6 @@ const ModalForm = ({ isLoggedIn, setIsLoggedIn }) => {
       await handleApiRequest(myUser, path);
       setIsLoggedIn(true);
     } catch (err) {
-      console.log(isVisible);
       setError(err.message);
     }
   };
@@ -70,12 +68,12 @@ const ModalForm = ({ isLoggedIn, setIsLoggedIn }) => {
       ) : (
         <a onClick={() => setIsVisible(true)}>Sign in</a>
       )}
-      {serverMessage ? <div>{serverMessage}</div> : null}
       <Modal
         title="Sign In"
         visible={isVisible}
         onOk={handleOk}
         onCancel={handleCancel}
+        maskStyle={true}
       >
         <div className="input-container">
           <div className="input">

@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import SplitEditor from "../components/SplitEditor";
 import UIDLtoHTMLComponent from "../components/UIDLtoHTMLComponent";
 import NavBar from "../components/NavBar";
-import fetch from "isomorphic-unfetch";
 
 const Home = () => {
   const [isHidden, setIsHidden] = useState(false);
@@ -28,7 +27,12 @@ const Home = () => {
     <div className="main">
       <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <div className="mainContainer">
-        <SplitEditor onChange={handleChange} uidl={uidl} isHidden={isHidden} />
+        <SplitEditor
+          onChange={handleChange}
+          uidl={uidl}
+          isHidden={isHidden}
+          setUidl={setUidl}
+        />
         <button className="hideButton" id="hide" onClick={() => handleClick()}>
           {isHidden ? <span>></span> : <span>&lt;</span>}
         </button>

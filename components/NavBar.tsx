@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import ModalForm from "./Modal";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 const NavBar = ({ isLoggedIn, setIsLoggedIn }) => {
+  const [userGreeting, setUserGreeting] = useState("");
+
   return (
     <div className="nav-bar">
       <a href="https://teleporthq.io/">
@@ -13,7 +15,12 @@ const NavBar = ({ isLoggedIn, setIsLoggedIn }) => {
       </a>
 
       <div className="items">
-        <ModalForm isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+        {isLoggedIn ? <a>{userGreeting}</a> : ""}
+        <ModalForm
+          isLoggedIn={isLoggedIn}
+          setIsLoggedIn={setIsLoggedIn}
+          setUserGreeting={setUserGreeting}
+        />
         <a href="https://docs.teleporthq.io/">Official Docs</a>
         <a href="https://github.com/teleporthq/teleport-code-generators">
           Contribute <FontAwesomeIcon icon={faGithub} size="lg" />
@@ -32,11 +39,11 @@ const NavBar = ({ isLoggedIn, setIsLoggedIn }) => {
             box-sizing: border-box;
             border-bottom: 1px solid #00000010;
           }
-          img {
+          .nav-bar img {
             height: 2.2rem;
             vertical-align: middle;
           }
-          a {
+          .nav-bar a {
             padding: 0 10px;
             text-decoration: none;
             transition: color 0.2s;
