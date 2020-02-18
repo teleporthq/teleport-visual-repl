@@ -47,6 +47,7 @@ const handleChange = async (uidlEntryName, setUidl) => {
 const EditorNav = ({ uidl, setUidl, isLoggedIn }) => {
   const [options, setOptions] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [modalText, setModalText] = useState("");
 
   useEffect(() => {
     populateDropdown(setOptions);
@@ -62,7 +63,11 @@ const EditorNav = ({ uidl, setUidl, isLoggedIn }) => {
       >
         {options}
       </Select>
-      <ModalConfirmation visible={showModal} />
+      <ModalConfirmation
+        visible={showModal}
+        handleSave={() => handleSave(uidl, setOptions)}
+        modalText={modalText}
+      />
       <div className="btns">
         <Button onClick={() => handleSave(uidl, setOptions)}>
           Save Component
