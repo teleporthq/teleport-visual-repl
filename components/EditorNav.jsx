@@ -4,11 +4,11 @@ import { Menu, Icon, message, Button, Select } from "antd";
 import ModalConfirmation from "../components/ModalConfirmation";
 
 //TODO
-const handleSave = async (uidl, setOptions) => {
+const handleSave = async (uidl, setOptions, componentName) => {
   const token = localStorage.getItem("access-token");
   const uidlDTO = {
     uidlEntry: uidl,
-    entryName: "Vlad"
+    entryName: componentName
   };
   await saveUidl(uidlDTO, token);
   populateDropdown(setOptions);
@@ -24,8 +24,12 @@ const populateDropdown = setOptions => {
   if (token) {
     getUidlByName("", token)
       .then(options => {
-        return options.success.map(option => {
-          return <Option value={option}>{option}</Option>;
+        return options.success.map((option, i) => {
+          return (
+            <Option key={i} value={option}>
+              {option}
+            </Option>
+          );
         });
       })
       .then(options => {
@@ -44,7 +48,6 @@ const handleChange = async (uidlEntryName, setUidl) => {
   const token = localStorage.getItem("access-token");
   if (token) {
     const uidl = await getUidlByName(uidlEntryName, token);
-    console.log(uidl);
     setUidl(uidl.success.UIDLEntry);
   }
 };
@@ -52,7 +55,6 @@ const handleChange = async (uidlEntryName, setUidl) => {
 const EditorNav = ({ uidl, setUidl, isLoggedIn }) => {
   const [options, setOptions] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [modalText, setModalText] = useState("");
 
   useEffect(() => {
     populateDropdown(setOptions);
@@ -70,13 +72,14 @@ const EditorNav = ({ uidl, setUidl, isLoggedIn }) => {
       </Select>
       <ModalConfirmation
         visible={showModal}
-        handleSave={() => handleSave(uidl, setOptions)}
-        modalText={modalText}
+        setIsVisible={setShowModal}
+        handleSave={handleSave}
+        uidl={uidl}
+        setOptions={setOptions}
+        modalText="Please Name your Component and click ok to save it!"
       />
       <div className="btns">
-        <Button onClick={() => handleSave(uidl, setOptions)}>
-          Save Component
-        </Button>
+        <Button onClick={() => setShowModal(true)}>Save Component</Button>
         <div className="space"></div>
         <Button onClick={() => handleDelete()}>Delete Component</Button>
       </div>
