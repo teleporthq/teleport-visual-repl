@@ -1,14 +1,15 @@
 import { NextPage } from "next";
 import "../utils/UIDLToHtml";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SplitEditor from "../components/SplitEditor";
 import UIDLtoHTMLComponent from "../components/UIDLtoHTMLComponent";
 import NavBar from "../components/NavBar";
+import fetch from "isomorphic-unfetch";
 
-
-const Home: NextPage<{ userAgent: string }> = () => {
+const Home = () => {
   const [isHidden, setIsHidden] = useState(false);
   const [uidl, setUidl] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleClick = () => {
     setIsHidden(!isHidden);
@@ -17,10 +18,15 @@ const Home: NextPage<{ userAgent: string }> = () => {
   const handleChange = newValue => {
     setUidl(newValue);
   };
+  useEffect(() => {
+    if (localStorage.getItem("access-token")) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+  console.log("LoggedIn ? :", isLoggedIn);
   return (
-    
     <div className="main">
-      <NavBar /> 
+      <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <div className="mainContainer">
         <SplitEditor onChange={handleChange} uidl={uidl} isHidden={isHidden} />
         <button className="hideButton" id="hide" onClick={() => handleClick()}>
@@ -70,5 +76,15 @@ const Home: NextPage<{ userAgent: string }> = () => {
     </div>
   );
 };
+
+// Home.getInitialProps = async ctx => {
+//   const res = await fetch("http://localhost:8080/authentication/login", {
+//     method: "GET",
+//     headers: ctx.req ? { cookie: ctx.req.headers.cookie } : undefined
+//   });
+
+//   const result = await res.json();
+//   console.log(result);
+// };
 
 export default Home;

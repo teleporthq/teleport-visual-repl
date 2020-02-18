@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { registerUser } from "../api/usersApi";
+import { handleAuthentication } from "../api/usersApi";
 import { Modal, Button, Input } from "antd";
 
-const ModalForm = () => {
+const ModalForm = ({ isLoggedIn, setIsLoggedIn }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [register, setRegister] = useState(false);
 
@@ -13,22 +13,37 @@ const ModalForm = () => {
   const [error, setError] = useState("");
   const [serverMessage, setServerMessage] = useState("");
 
+  const handleApiRequest = async (userData, path) => {
+    const response = await handleAuthentication(userData, path);
+
+    const data = await response.json();
+    if (data.error) {
+      throw new Error(data.error);
+    }
+    localStorage.setItem("access-token", data.accessToken);
+    setServerMessage(data.message);
+    setIsVisible(false);
+  };
+
   const handleOk = async e => {
     try {
-      if (eMail === "" || username === "" || password === "") {
-        throw new Error("Fields can't be empty");
+      let myUser = null;
+      let path = null;
+      if (register) {
+        if (eMail === "" || username === "" || password === "") {
+          throw new Error("Fields can't be empty");
+        }
+        myUser = { eMail, username, password };
+        path = "register";
+      } else {
+        if (!eMail || !password) {
+          throw new Error("Fields can't be empty");
+        }
+        myUser = { loginToken: eMail, password };
+        path = "signin";
       }
-      const myUser = { eMail, username, password };
-      const response = await registerUser(myUser);
-
-      const data = await response.json();
-      console.log(data);
-      if (data.error) {
-        throw new Error(data.error);
-      }
-      localStorage.setItem("access-token", data.accessToken);
-      setServerMessage(data.message);
-      setIsVisible(false);
+      await handleApiRequest(myUser, path);
+      setIsLoggedIn(true);
     } catch (err) {
       console.log(isVisible);
       setError(err.message);
@@ -36,17 +51,25 @@ const ModalForm = () => {
   };
 
   const handleCancel = e => {
-    setIsVisible(true);
+    setIsVisible(false);
   };
-  const token = localStorage.getItem("access-token");
-  console.log("TOKEN: ", token);
+
   const handleRegister = () => {
     setRegister(!register);
   };
 
+  const logMeOut = () => {
+    localStorage.removeItem("access-token");
+    setIsLoggedIn(false);
+  };
+
   return (
     <div className="container">
-      <a onClick={() => setIsVisible(true)}>Sign in</a>
+      {isLoggedIn ? (
+        <a onClick={logMeOut}>Log out</a>
+      ) : (
+        <a onClick={() => setIsVisible(true)}>Sign in</a>
+      )}
       {serverMessage ? <div>{serverMessage}</div> : null}
       <Modal
         title="Sign In"
