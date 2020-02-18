@@ -38,16 +38,17 @@ const handleChange = async (uidlEntryName, setUidl) => {
   const token = localStorage.getItem("access-token");
   if (token) {
     const uidl = await getUidlByName(uidlEntryName, token);
+    console.log(uidl);
     setUidl(uidl.success.UIDLEntry);
   }
 };
 
-const EditorNav = ({ uidl, setUidl }) => {
+const EditorNav = ({ uidl, setUidl, isLoggedIn }) => {
   const [options, setOptions] = useState("");
 
   useEffect(() => {
     populateDropdown(setOptions);
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <div className="header">
