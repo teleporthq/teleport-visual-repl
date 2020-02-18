@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { handleAuthentication } from "../api/usersApi";
 import { Modal, Button, Input } from "antd";
 
-const ModalForm = ({ isLoggedIn, setIsLoggedIn }) => {
-  const [isVisible, setIsVisible] = useState(false);
+const ModalForm = ({
+  showModal,
+  setshowModal,
+  setIsLoggedIn,
+  setwelcomeMessage
+}) => {
   const [register, setRegister] = useState(false);
 
   const [eMail, setEmail] = useState("");
@@ -11,18 +15,18 @@ const ModalForm = ({ isLoggedIn, setIsLoggedIn }) => {
   const [username, setUserName] = useState("");
 
   const [error, setError] = useState("");
-  const [serverMessage, setServerMessage] = useState("");
 
   const handleApiRequest = async (userData, path) => {
     const response = await handleAuthentication(userData, path);
 
     const data = await response.json();
+    console.log("data :", data);
     if (data.error) {
       throw new Error(data.error);
     }
     localStorage.setItem("access-token", data.accessToken);
-    setServerMessage(data.message);
-    setIsVisible(false);
+    setwelcomeMessage(data.greet);
+    setshowModal(false);
   };
 
   const handleOk = async e => {
@@ -44,36 +48,32 @@ const ModalForm = ({ isLoggedIn, setIsLoggedIn }) => {
       }
       await handleApiRequest(myUser, path);
       setIsLoggedIn(true);
+      setEmail("");
+      setPassword("");
+      setUserName("");
     } catch (err) {
-      console.log(isVisible);
       setError(err.message);
     }
   };
 
   const handleCancel = e => {
-    setIsVisible(false);
+    setshowModal(false);
+    setEmail("");
+    setPassword("");
+    setUserName("");
+    setwelcomeMessage("");
+    setError("");
   };
 
   const handleRegister = () => {
     setRegister(!register);
   };
 
-  const logMeOut = () => {
-    localStorage.removeItem("access-token");
-    setIsLoggedIn(false);
-  };
-
   return (
     <div className="container">
-      {isLoggedIn ? (
-        <a onClick={logMeOut}>Log out</a>
-      ) : (
-        <a onClick={() => setIsVisible(true)}>Sign in</a>
-      )}
-      {serverMessage ? <div>{serverMessage}</div> : null}
       <Modal
-        title="Sign In"
-        visible={isVisible}
+        title={register ? "Register" : "Sign in"}
+        visible={showModal}
         onOk={handleOk}
         onCancel={handleCancel}
       >
@@ -81,6 +81,7 @@ const ModalForm = ({ isLoggedIn, setIsLoggedIn }) => {
           <div className="input">
             {" "}
             <Input
+              value={eMail}
               placeholder="Email"
               onChange={e => setEmail(e.target.value)}
             />{" "}
@@ -89,6 +90,7 @@ const ModalForm = ({ isLoggedIn, setIsLoggedIn }) => {
           <div className="input">
             {" "}
             <Input
+              value={password}
               placeholder="Password"
               onChange={e => setPassword(e.target.value)}
             />{" "}
@@ -97,6 +99,7 @@ const ModalForm = ({ isLoggedIn, setIsLoggedIn }) => {
           <div className="inputR">
             {register && (
               <Input
+                value={username}
                 placeholder="User Name"
                 onChange={e => setUserName(e.target.value)}
               />

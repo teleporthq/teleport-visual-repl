@@ -23,7 +23,7 @@ const Home = () => {
       setIsLoggedIn(true);
     }
   }, []);
-  console.log("LoggedIn ? :", isLoggedIn);
+
   return (
     <div className="main">
       <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />

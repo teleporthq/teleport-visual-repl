@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ModalForm from "./Modal";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 const NavBar = ({ isLoggedIn, setIsLoggedIn }) => {
+  const [showModal, setshowModal] = useState(false);
+  const [welcomeMessage, setwelcomeMessage] = useState("");
+
+  const logMeOut = () => {
+    localStorage.removeItem("access-token");
+    setIsLoggedIn(false);
+    setwelcomeMessage("");
+  };
+
   return (
     <div className="nav-bar">
       <a href="https://teleporthq.io/">
@@ -13,11 +22,22 @@ const NavBar = ({ isLoggedIn, setIsLoggedIn }) => {
       </a>
 
       <div className="items">
-        <ModalForm isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+        {isLoggedIn ? (
+          <a onClick={logMeOut}>Log out</a>
+        ) : (
+          <a onClick={() => setshowModal(true)}>Sign in</a>
+        )}
         <a href="https://docs.teleporthq.io/">Official Docs</a>
         <a href="https://github.com/teleporthq/teleport-code-generators">
           Contribute <FontAwesomeIcon icon={faGithub} size="lg" />
         </a>
+        {welcomeMessage ? <div>{welcomeMessage}</div> : null}
+        <ModalForm
+          setwelcomeMessage={setwelcomeMessage}
+          showModal={showModal}
+          setshowModal={setshowModal}
+          setIsLoggedIn={setIsLoggedIn}
+        />
       </div>
 
       <style jsx>
