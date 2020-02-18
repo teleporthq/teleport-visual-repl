@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { saveUidl, getUidlByName } from "../api/uidlApi";
 import { Menu, Icon, message, Button, Select } from "antd";
+import ModalConfirmation from "../components/ModalConfirmation";
 
 const handleSave = async (uidl, setOptions) => {
   const token = localStorage.getItem("access-token");
@@ -45,49 +46,52 @@ const handleChange = async (uidlEntryName, setUidl) => {
 
 const EditorNav = ({ uidl, setUidl, isLoggedIn }) => {
   const [options, setOptions] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     populateDropdown(setOptions);
   }, [isLoggedIn]);
 
   return (
-    <div className="header">
-      <div className="dropDW">
-        <Select
-          showSearch
-          placeholder="Select a component name"
-          style={{ width: 200 }}
-          onChange={value => handleChange(value, setUidl)}
-        >
-          {options}
-        </Select>
-      </div>
-
+    <div className="editorUtilities">
+      <Select
+        showSearch
+        placeholder="Select a component name"
+        style={{ width: 200 }}
+        onChange={value => handleChange(value, setUidl)}
+      >
+        {options}
+      </Select>
+      <ModalConfirmation visible={showModal} />
       <div className="btns">
-        <div>
-          <Button onClick={() => handleSave(uidl, setOptions)}>Save</Button>{" "}
-        </div>
-        <div className="btn">
-          <Button onClick={() => handleDelete()}>Delete</Button>{" "}
-        </div>
+        <Button onClick={() => handleSave(uidl, setOptions)}>
+          Save Component
+        </Button>
+        <div className="space"></div>
+        <Button onClick={() => handleDelete()}>Delete Component</Button>
       </div>
 
       <style jsx>
         {`
-          .header {
+          .editorUtilities {
             position: relative;
-            padding: 1px;
+            padding: 20px;
             height: 40px;
             display: flex;
-            flex-direction: row;
+            align-items: center;
+            justify-content: space-around;
             border-bottom: solid 1px #cccccc20;
             background: black;
           }
           .btns {
             display: flex;
             align-items: center;
+            justify-content: space-evenly;
             margin-top: 2px;
             margin-left: 60px;
+          }
+          .space {
+            width: 5px;
           }
         `}
       </style>
