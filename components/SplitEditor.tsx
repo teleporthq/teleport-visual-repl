@@ -1,6 +1,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import EditorNav from "./EditorNav"
+import EditorNav from "./EditorNav";
 
 const CodeEditor = dynamic(import("./AceEditor"), { ssr: false });
 
@@ -9,7 +9,7 @@ const SplitEditor = ({ isHidden, onChange, uidl }) => {
     <div></div>
   ) : (
     <div className="container">
-        <EditorNav /> 
+      <EditorNav />
       <div className="editorContainer">
         <div className="wrapper" id="TEST">
           <CodeEditor

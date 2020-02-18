@@ -5,44 +5,52 @@ import { Modal, Button, Input } from "antd";
 const ModalForm = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [register, setRegister] = useState(false);
+
   const [eMail, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUserName] = useState("");
 
-  const showModal = () => {
-    setIsVisible({
-      visible: true
-    });
-  };
+  const [error, setError] = useState("");
+  const [serverMessage, setServerMessage] = useState("");
 
-  const handleOk = async () => {
-    console.log("I'm in handleOK!!!!!!!!");
-    const myUser = { eMail, username, password };
+  const handleOk = async e => {
     try {
+      if (eMail === "" || username === "" || password === "") {
+        throw new Error("Fields can't be empty");
+      }
+      const myUser = { eMail, username, password };
       const response = await registerUser(myUser);
 
       const data = await response.json();
       console.log(data);
+      if (data.error) {
+        throw new Error(data.error);
+      }
+      localStorage.setItem("access-token", data.accessToken);
+      setServerMessage(data.message);
+      setIsVisible(false);
     } catch (err) {
-      console.log("Error: ", err);
+      console.log(isVisible);
+      setError(err.message);
     }
-    setIsVisible(true);
   };
 
   const handleCancel = e => {
     setIsVisible(true);
   };
-
+  const token = localStorage.getItem("access-token");
+  console.log("TOKEN: ", token);
   const handleRegister = () => {
     setRegister(!register);
   };
 
   return (
     <div className="container">
-      <a onClick={showModal}>Sign in</a>
+      <a onClick={() => setIsVisible(true)}>Sign in</a>
+      {serverMessage ? <div>{serverMessage}</div> : null}
       <Modal
-        title="Sing in"
-        visible={isVisible.visible}
+        title="Sign In"
+        visible={isVisible}
         onOk={handleOk}
         onCancel={handleCancel}
       >
@@ -71,7 +79,7 @@ const ModalForm = () => {
               />
             )}
             <a onClick={handleRegister}> Register </a>
-            <button onClick={handleOk}>test</button>
+            {error ? <p>{error}</p> : null}
           </div>
         </div>
       </Modal>
