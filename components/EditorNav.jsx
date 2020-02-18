@@ -3,6 +3,7 @@ import { saveUidl, getUidlByName } from "../api/uidlApi";
 import { Menu, Icon, message, Button, Select } from "antd";
 import ModalConfirmation from "../components/ModalConfirmation";
 
+//TODO
 const handleSave = async (uidl, setOptions) => {
   const token = localStorage.getItem("access-token");
   const uidlDTO = {
@@ -13,6 +14,7 @@ const handleSave = async (uidl, setOptions) => {
   populateDropdown(setOptions);
 };
 
+//TODO
 const handleDelete = uidl => {
   const token = localStorage.getItem("access-token");
 };
@@ -28,6 +30,9 @@ const populateDropdown = setOptions => {
       })
       .then(options => {
         setOptions(options);
+      })
+      .catch(err => {
+        setOptions("");
       });
     return;
   }
