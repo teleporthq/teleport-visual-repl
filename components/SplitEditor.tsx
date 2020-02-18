@@ -4,12 +4,12 @@ import EditorNav from "./EditorNav";
 
 const CodeEditor = dynamic(import("./AceEditor"), { ssr: false });
 
-const SplitEditor = ({ isHidden, onChange, uidl, setUidl }) => {
+const SplitEditor = ({ isHidden, onChange, uidl, setUidl, isLoggedIn }) => {
   return isHidden ? (
     <div></div>
   ) : (
     <div className="container">
-      <EditorNav uidl={uidl} setUidl={setUidl} />
+      <EditorNav uidl={uidl} setUidl={setUidl} isLoggedIn={isLoggedIn} />
       <div className="editorContainer">
         <div className="wrapper" id="TEST">
           <CodeEditor

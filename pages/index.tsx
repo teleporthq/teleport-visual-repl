@@ -32,6 +32,7 @@ const Home = () => {
           uidl={uidl}
           isHidden={isHidden}
           setUidl={setUidl}
+          isLoggedIn={isLoggedIn}
         />
         <button className="hideButton" id="hide" onClick={() => handleClick()}>
           {isHidden ? <span>></span> : <span>&lt;</span>}
