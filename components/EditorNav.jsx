@@ -103,7 +103,7 @@ const EditorNav = ({ uidl, setUidl, isLoggedIn }) => {
         {`
           .editorUtilities {
             position: relative;
-            padding: 25px;
+            padding: 10px;
             height: 40px;
             display: flex;
             align-items: center;
