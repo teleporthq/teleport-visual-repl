@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { saveUidl, getUidlByName } from "../api/uidlApi";
-import { Menu, Icon, message, Button, Select } from "antd";
+import { saveUidl, getUidlByName, deleteUidl } from "../api/uidlApi";
+import { Menu, Icon, Message, Button, Select } from "antd";
 import ModalConfirmation from "../components/ModalConfirmation";
+import ModalDelete from "../components/ModalDelete";
 
-//TODO
+//Save
 const handleSave = async (uidl, setOptions, componentName) => {
   const token = localStorage.getItem("access-token");
   const uidlDTO = {
@@ -14,9 +15,15 @@ const handleSave = async (uidl, setOptions, componentName) => {
   populateDropdown(setOptions);
 };
 
-//TODO
-const handleDelete = uidl => {
+//Detele
+const handleDelete = async (uidl, setOptions, componentName) => {
   const token = localStorage.getItem("access-token");
+  const uidlDTO = {
+    uidlEntry: uidl,
+    entryName: componentName
+  };
+  await deleteUidl(uidlDTO, token);
+  populateDropdown(setOptions);
 };
 
 const populateDropdown = setOptions => {
@@ -26,9 +33,9 @@ const populateDropdown = setOptions => {
       .then(options => {
         return options.success.map((option, i) => {
           return (
-            <Option key={i} value={option}>
+            <Select.Option key={i} value={option}>
               {option}
-            </Option>
+            </Select.Option>
           );
         });
       })
@@ -55,33 +62,51 @@ const handleChange = async (uidlEntryName, setUidl) => {
 const EditorNav = ({ uidl, setUidl, isLoggedIn }) => {
   const [options, setOptions] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [showModalDelete, setShowModalDelete] = useState(false);
+  const [componentName, setComponentName] = useState("");
 
   useEffect(() => {
     populateDropdown(setOptions);
   }, [isLoggedIn]);
-
+  console.log(componentName);
   return (
     <div className="editorUtilities">
       <Select
         showSearch
         placeholder="Select a component name"
         style={{ width: 200 }}
-        onChange={value => handleChange(value, setUidl)}
+        onChange={value => {
+          handleChange(value, setUidl);
+          setComponentName(value);
+        }}
       >
         {options}
       </Select>
+
       <ModalConfirmation
         visible={showModal}
         setIsVisible={setShowModal}
         handleSave={handleSave}
+        componentName={componentName}
         uidl={uidl}
         setOptions={setOptions}
-        modalText="Please Name your Component and click ok to save it!"
       />
+
+      <ModalDelete
+        visible={showModalDelete}
+        setIsVisible={setShowModalDelete}
+        handleDelete={handleDelete}
+        componentName={componentName}
+        uidl={uidl}
+        setOptions={setOptions}
+      />
+
       <div className="btns">
         <Button onClick={() => setShowModal(true)}>Save Component</Button>
         <div className="space"></div>
-        <Button onClick={() => handleDelete()}>Delete Component</Button>
+        <Button onClick={() => setShowModalDelete(true)}>
+          Delete Component
+        </Button>
       </div>
 
       <style jsx>

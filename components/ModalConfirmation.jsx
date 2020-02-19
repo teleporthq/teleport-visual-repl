@@ -5,22 +5,30 @@ const ModalConfirmation = ({
   visible,
   setIsVisible,
   handleSave,
-  modalText,
   uidl,
-  setOptions
+  setOptions,
+  componentName
 }) => {
-  const [componentName, setComponentName] = useState("");
+  const [newComponentName, setnewComponentName] = useState("");
   return (
     <Modal
       visible={visible}
+      okText="Save"
       onOk={() => {
-        handleSave(uidl, setOptions, componentName);
+        handleSave(uidl, setOptions, newComponentName);
         setIsVisible(false);
       }}
       onCancel={() => setIsVisible(false)}
     >
-      <p>{modalText}</p>
-      <Input onChange={e => setComponentName(e.target.value)}></Input>
+      <div>
+        <div style={{ textAlign: "center" }}>
+          <p>Please choose a name for your component</p>
+          <Input
+            onChange={e => setnewComponentName(e.target.value)}
+            defaultValue={componentName}
+          ></Input>
+        </div>
+      </div>
     </Modal>
   );
 };
