@@ -4,7 +4,7 @@ import ModalForm from "./Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
-const NavBar = ({ isLoggedIn, setIsLoggedIn }) => {
+const NavBar = ({ isLoggedIn, setIsLoggedIn, setUidl, setComponentName }) => {
   const [showModal, setshowModal] = useState(false);
   const [welcomeMessage, setwelcomeMessage] = useState("");
 
@@ -12,6 +12,8 @@ const NavBar = ({ isLoggedIn, setIsLoggedIn }) => {
     localStorage.removeItem("access-token");
     setIsLoggedIn(false);
     setwelcomeMessage("");
+    setUidl("");
+    setComponentName("");
   };
 
   return (
@@ -22,16 +24,24 @@ const NavBar = ({ isLoggedIn, setIsLoggedIn }) => {
       </a>
 
       <div className="items">
-        {isLoggedIn ? (
-          <a onClick={logMeOut}>Log out</a>
-        ) : (
-          <a onClick={() => setshowModal(true)}>Sign in</a>
-        )}
+        {welcomeMessage ? (
+          <div className="welcome">{welcomeMessage}!</div>
+        ) : null}
         <a href="https://docs.teleporthq.io/">Official Docs</a>
         <a href="https://github.com/teleporthq/teleport-code-generators">
           Contribute <FontAwesomeIcon icon={faGithub} size="lg" />
         </a>
-        {welcomeMessage ? <div>{welcomeMessage}</div> : null}
+        {isLoggedIn ? (
+          <div>
+            <a onClick={logMeOut} style={{ color: "#822cec" }}>
+              Log out
+            </a>
+          </div>
+        ) : (
+          <a onClick={() => setshowModal(true)} style={{ color: "#822cec" }}>
+            Sign in
+          </a>
+        )}
         <ModalForm
           setwelcomeMessage={setwelcomeMessage}
           showModal={showModal}
@@ -68,6 +78,9 @@ const NavBar = ({ isLoggedIn, setIsLoggedIn }) => {
             display: flex;
             font-size: 16px;
             color: black;
+          }
+          .welcome {
+            color: #822cec;
           }
         `}
       </style>

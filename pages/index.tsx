@@ -9,6 +9,7 @@ const Home = () => {
   const [isHidden, setIsHidden] = useState(false);
   const [uidl, setUidl] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [componentName, setComponentName] = useState("");
 
   const handleClick = () => {
     setIsHidden(!isHidden);
@@ -25,7 +26,12 @@ const Home = () => {
 
   return (
     <div className="main">
-      <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <NavBar
+        isLoggedIn={isLoggedIn}
+        setIsLoggedIn={setIsLoggedIn}
+        setUidl={setUidl}
+        setComponentName={setComponentName}
+      />
       <div className="mainContainer">
         <SplitEditor
           onChange={handleChange}
@@ -37,7 +43,11 @@ const Home = () => {
         <button className="hideButton" id="hide" onClick={() => handleClick()}>
           {isHidden ? <span>></span> : <span>&lt;</span>}
         </button>
-        <UIDLtoHTMLComponent uidl={uidl} />
+        <UIDLtoHTMLComponent
+          uidl={uidl}
+          componentName={componentName}
+          setComponentName={setComponentName}
+        />
       </div>
 
       <style jsx>{`
@@ -72,7 +82,7 @@ const Home = () => {
         .hideButton:hover {
           font-weight: 700 !important;
           letter-spacing: 3px;
-          background: #333;
+          background: #822cec;
           -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
           -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
           transition: all 0.3s ease 0s;

@@ -26,9 +26,9 @@ const populateDropdown = setOptions => {
       .then(options => {
         return options.success.map((option, i) => {
           return (
-            <Option key={i} value={option}>
+            <Select.Option key={i} value={option}>
               {option}
-            </Option>
+            </Select.Option>
           );
         });
       })
@@ -60,12 +60,15 @@ const EditorNav = ({ uidl, setUidl, isLoggedIn }) => {
     populateDropdown(setOptions);
   }, [isLoggedIn]);
 
+  console.log("Options: ", options);
   return (
     <div className="editorUtilities">
       <Select
         showSearch
-        placeholder="Select a component name"
-        style={{ width: 200 }}
+        placeholder={
+          isLoggedIn ? "Select a component name" : "Sign In to view your UIDLs"
+        }
+        style={{ width: 200, color: "#822cec" }}
         onChange={value => handleChange(value, setUidl)}
       >
         {options}
@@ -79,20 +82,32 @@ const EditorNav = ({ uidl, setUidl, isLoggedIn }) => {
         modalText="Please Name your Component and click ok to save it!"
       />
       <div className="btns">
-        <Button onClick={() => setShowModal(true)}>Save Component</Button>
+        <Button
+          onClick={() => setShowModal(true)}
+          disabled={isLoggedIn ? false : true}
+          style={{ color: "#822cec" }}
+        >
+          Save Component
+        </Button>
         <div className="space"></div>
-        <Button onClick={() => handleDelete()}>Delete Component</Button>
+        <Button
+          onClick={() => handleDelete()}
+          disabled={isLoggedIn ? false : true}
+          style={{ color: "#822cec" }}
+        >
+          Delete Component
+        </Button>
       </div>
 
       <style jsx>
         {`
           .editorUtilities {
             position: relative;
-            padding: 20px;
+            padding: 25px;
             height: 40px;
             display: flex;
             align-items: center;
-            justify-content: space-around;
+            justify-content: space-between;
             border-bottom: solid 1px #cccccc20;
             background: black;
           }
