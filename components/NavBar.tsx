@@ -72,7 +72,16 @@ const NavBar = ({ isLoggedIn, setIsLoggedIn, setUidl, setComponentName }) => {
             transition: color 0.2s;
             color: #2c3e50;
             text-decoration: none;
-            font-size: 16px;
+            font-size: 17px;
+            cursor: pointer;
+            outline: none;
+            background-color: transparent;
+            line-height: 1.5;
+            font-feature-settings: "tnum";
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+              "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+              "Helvetica Neue", Helvetica, Arial, sans-serif,
+              "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
           }
           .items {
             display: flex;

@@ -122,8 +122,8 @@ const ModalForm = ({
                 <a onClick={handleRegister}> New User? Register! </a>
               </div>
             )}
-            {error ? <p>{error}</p> : null}
           </div>
+          {error ? <p>Error: {error}</p> : null}
         </div>
       </Modal>
 
@@ -133,8 +133,14 @@ const ModalForm = ({
             display: flex;
             flex-direction: column;
           }
+          .input:hover {
+            transition: 0.2s;
+            color: rgb(64, 169, 255);
+          }
           .input {
             margin-top: 10px;
+            color: #1890ff;
+            cursor: pointer;
           }
         `}
       </style>
