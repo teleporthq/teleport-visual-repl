@@ -3,9 +3,12 @@ import UIDLToHtml from "../utils/UIDLToHtml";
 import UIDLParser from "../utils/UIDLParser";
 import StateAndPropsToValues from "../utils/StateAndPropsToValues";
 
-export default function UIDLtoHTMLComponent({ uidl }): any {
+export default function UIDLtoHTMLComponent({
+  uidl,
+  componentName,
+  setComponentName
+}): any {
   const htmlContainer = useRef(null);
-  const [componentName, setComponentName] = useState("");
 
   useEffect(() => {
     if (!uidl) {

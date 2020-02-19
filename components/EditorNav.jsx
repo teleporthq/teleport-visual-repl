@@ -68,17 +68,17 @@ const EditorNav = ({ uidl, setUidl, isLoggedIn }) => {
   useEffect(() => {
     populateDropdown(setOptions);
   }, [isLoggedIn]);
-  console.log(componentName);
+
+  console.log("Options: ", options);
   return (
     <div className="editorUtilities">
       <Select
         showSearch
-        placeholder="Select a component name"
-        style={{ width: 200 }}
-        onChange={value => {
-          handleChange(value, setUidl);
-          setComponentName(value);
-        }}
+        placeholder={
+          isLoggedIn ? "Select a component name" : "Sign In to view your UIDLs"
+        }
+        style={{ width: 200, color: "#822cec" }}
+        onChange={value => handleChange(value, setUidl)}
       >
         {options}
       </Select>
@@ -102,9 +102,19 @@ const EditorNav = ({ uidl, setUidl, isLoggedIn }) => {
       />
 
       <div className="btns">
-        <Button onClick={() => setShowModal(true)}>Save Component</Button>
+        <Button
+          onClick={() => setShowModal(true)}
+          disabled={isLoggedIn ? false : true}
+          style={{ color: "#822cec" }}
+        >
+          Save Component
+        </Button>
         <div className="space"></div>
-        <Button onClick={() => setShowModalDelete(true)}>
+        <Button
+          onClick={() => handleDelete()}
+          disabled={isLoggedIn ? false : true}
+          style={{ color: "#822cec" }}
+        >
           Delete Component
         </Button>
       </div>
@@ -113,11 +123,11 @@ const EditorNav = ({ uidl, setUidl, isLoggedIn }) => {
         {`
           .editorUtilities {
             position: relative;
-            padding: 20px;
+            padding: 10px;
             height: 40px;
             display: flex;
             align-items: center;
-            justify-content: space-around;
+            justify-content: space-between;
             border-bottom: solid 1px #cccccc20;
             background: black;
           }

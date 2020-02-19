@@ -27,6 +27,9 @@ const ModalForm = ({
     localStorage.setItem("access-token", data.accessToken);
     setwelcomeMessage(data.greet);
     setshowModal(false);
+    setTimeout(() => {
+      setwelcomeMessage("");
+    }, 2000);
   };
 
   const handleOk = async e => {
@@ -51,6 +54,7 @@ const ModalForm = ({
       setEmail("");
       setPassword("");
       setUserName("");
+      setError("");
     } catch (err) {
       setError(err.message);
     }
@@ -83,7 +87,7 @@ const ModalForm = ({
             {" "}
             <Input
               value={eMail}
-              placeholder="Email"
+              placeholder="Email or Username"
               onChange={e => setEmail(e.target.value)}
             />{" "}
           </div>
@@ -92,12 +96,13 @@ const ModalForm = ({
             {" "}
             <Input
               value={password}
+              type="password"
               placeholder="Password"
               onChange={e => setPassword(e.target.value)}
             />{" "}
           </div>
 
-          <div className="inputR">
+          <div className="input">
             {register && (
               <Input
                 value={username}
@@ -105,7 +110,18 @@ const ModalForm = ({
                 onChange={e => setUserName(e.target.value)}
               />
             )}
-            <a onClick={handleRegister}> Register </a>
+            {register ? (
+              <div className="input">
+                <a onClick={handleRegister} className="input">
+                  {" "}
+                  Already have an account? Sign In!{" "}
+                </a>
+              </div>
+            ) : (
+              <div className="input">
+                <a onClick={handleRegister}> New User? Register! </a>
+              </div>
+            )}
             {error ? <p>{error}</p> : null}
           </div>
         </div>
@@ -117,8 +133,7 @@ const ModalForm = ({
             display: flex;
             flex-direction: column;
           }
-          .input,
-          .inputR {
+          .input {
             margin-top: 10px;
           }
         `}
