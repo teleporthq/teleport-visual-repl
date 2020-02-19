@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Input } from "antd";
 
 const ModalConfirmation = ({
@@ -9,9 +9,15 @@ const ModalConfirmation = ({
   setOptions,
   componentName
 }) => {
-  const [newComponentName, setnewComponentName] = useState("");
+  const [newComponentName, setNewComponentName] = useState("");
+
+  useEffect(() => {
+    setNewComponentName(componentName);
+  }, [componentName]);
+
   return (
     <Modal
+      destroyOnClose={true}
       visible={visible}
       okText="Save"
       onOk={() => {
@@ -20,14 +26,12 @@ const ModalConfirmation = ({
       }}
       onCancel={() => setIsVisible(false)}
     >
-      <div>
-        <div style={{ textAlign: "center" }}>
-          <p>Please choose a name for your component</p>
-          <Input
-            onChange={e => setnewComponentName(e.target.value)}
-            defaultValue={componentName}
-          ></Input>
-        </div>
+      <div style={{ textAlign: "center" }}>
+        <p>Please choose a name for your component</p>
+        <Input
+          onChange={e => setNewComponentName(e.target.value)}
+          defaultValue={componentName}
+        ></Input>
       </div>
     </Modal>
   );

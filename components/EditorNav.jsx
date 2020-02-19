@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { saveUidl, getUidlByName, deleteUidl } from "../api/uidlApi";
-import { Menu, Icon, Message, Button, Select } from "antd";
+import { Button, Select } from "antd";
 import ModalConfirmation from "../components/ModalConfirmation";
 import ModalDelete from "../components/ModalDelete";
 
@@ -23,6 +23,7 @@ const handleDelete = async (uidl, setOptions, componentName) => {
     entryName: componentName
   };
   await deleteUidl(uidlDTO, token);
+
   populateDropdown(setOptions);
 };
 
@@ -51,9 +52,10 @@ const populateDropdown = setOptions => {
   setOptions("");
 };
 
-const handleChange = async (uidlEntryName, setUidl) => {
+const handleChange = async (uidlEntryName, setUidl, setComponentName) => {
   const token = localStorage.getItem("access-token");
   if (token) {
+    await setComponentName(uidlEntryName);
     const uidl = await getUidlByName(uidlEntryName, token);
     setUidl(uidl.success.UIDLEntry);
   }
@@ -69,7 +71,6 @@ const EditorNav = ({ uidl, setUidl, isLoggedIn }) => {
     populateDropdown(setOptions);
   }, [isLoggedIn]);
 
-  console.log("Options: ", options);
   return (
     <div className="editorUtilities">
       <Select
@@ -78,7 +79,9 @@ const EditorNav = ({ uidl, setUidl, isLoggedIn }) => {
           isLoggedIn ? "Select a component name" : "Sign In to view your UIDLs"
         }
         style={{ width: 200, color: "#822cec" }}
-        onChange={value => handleChange(value, setUidl)}
+        onChange={value => {
+          handleChange(value, setUidl, setComponentName);
+        }}
       >
         {options}
       </Select>
@@ -111,7 +114,7 @@ const EditorNav = ({ uidl, setUidl, isLoggedIn }) => {
         </Button>
         <div className="space"></div>
         <Button
-          onClick={() => handleDelete()}
+          onClick={() => setShowModalDelete(true)}
           disabled={isLoggedIn ? false : true}
           style={{ color: "#822cec" }}
         >
